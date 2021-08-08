@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\VerifyRegisterRequest;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -33,9 +34,9 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VerifyRegisterRequest $request)
     {
-
+        echo "asd";
     }
 
     /**
