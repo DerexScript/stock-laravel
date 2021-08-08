@@ -26,10 +26,11 @@ class VerifyRegisterRequest extends FormRequest
         return [
             'name' => 'required|min:4',
             'surname' => 'required|min:4',
-            'email' => 'required|email',
-            'username' => 'required|regex:/^[a-zA-Z].{1,15}/i',
+            'email' => 'required|email|unique:users',
+            'username' => 'required|regex:/^[a-zA-Z].{1,15}/i|unique:users',
             'password' => 'required|min:8|required_with:confirmPassword|same:confirmPassword',
-            'confirmPassword' => 'required'
+            'confirmPassword' => 'required|min:8',
+            'terms' => 'required',
         ];
     }
 
@@ -50,9 +51,13 @@ class VerifyRegisterRequest extends FormRequest
 
             'password.required' => 'Você precisa informar uma senha',
             'password.min' => 'Sua senha precisa ter no minimo 8 caracteres.',
-            'password.required_with' => 'O campo senha e confirmar senha devem ser iguais.',
+            'password.required_with' => 'Você tambem precisa informar o campo de confirmação de senha',
+            'password.same' => 'O campo senha e confirmar senha devem ser iguais.',
 
             'confirmPassword.required' => 'O campo de confirmação da senha é obrigatório.',
+            'confirmPassword.min' => 'A senha de confirmação deve ter pelo menos 8 caracteres.',
+
+            'terms.required' => 'Você precisa aceitar os termos.',
         ];
     }
 

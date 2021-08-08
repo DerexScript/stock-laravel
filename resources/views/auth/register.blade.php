@@ -3,10 +3,10 @@
 @section('title', $title)
 
 @section('content')
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 p-1">
         <div class="row">
             <div class="col-md-12">
-                <form class="row g-3" action="{{route('auth.store')}}" method="POST">
+                <form class="row g-3 p-2 border border-2 border-dark rounded" action="{{route('auth.store')}}" method="POST">
                     <a class="d-flex justify-content-center" href="">
                         <img class="mb-4" src="{{asset('assets/img/brand/bootstrap-logo.svg')}}" alt="" width="72"
                              height="57">
@@ -51,16 +51,18 @@
 
                     <div class="col-12">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="terms" id="terms">
+                            <input class="form-check-input" type="checkbox" name="terms" id="terms" aria-describedby="termsHelp">
                             <label class="form-check-label" for="terms">
                                 Aceito com os <a href="#">termos</a>
                             </label>
+                            <div id="termsHelp" class="form-text text-warning">@if($errors->has('terms')) {{$errors->first('terms')}} @endif</div>
                         </div>
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-outline-success w-100">Cadastrar</button>
                     </div>
                     @CSRF
+
                 </form>
             </div>
         </div>
