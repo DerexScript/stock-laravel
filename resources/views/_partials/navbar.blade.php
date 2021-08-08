@@ -22,8 +22,8 @@
                 @endguest
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link border border-2 border-danger rounded-3"
-                           aria-current="page" href="{{ route('auth.logout') }}">Logout
+                        <a class="nav-link border border-2 border-success text-success rounded-3"
+                           aria-current="page" href="{{ route('dashboard') }}">Dashboard
                         </a>
                     </li>
                 @endauth

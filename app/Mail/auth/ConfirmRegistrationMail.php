@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail\Auth;
+namespace App\Mail\auth;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeMail extends Mailable
+class ConfirmRegistrationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,6 +18,7 @@ class WelcomeMail extends Mailable
      */
     public function __construct()
     {
+        //
     }
 
     /**
@@ -27,8 +28,6 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        //return $this->view('view.name');
-        return $this->from('example@example.com', 'Example')
-            ->view('emails.auth.welcome');
+        return $this->markdown('auth.email.ConfirmRegistration');
     }
 }
