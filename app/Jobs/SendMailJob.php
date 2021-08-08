@@ -38,7 +38,7 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-        new Throws();
+        //new Throws();
         \Illuminate\Support\Facades\Mail::to("email@email.com")->send(new WelcomeMail);
     }
 }
