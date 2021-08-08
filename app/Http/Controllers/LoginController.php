@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VerifyLoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,19 +14,8 @@ class LoginController extends Controller
         return view('auth.login', ['title' => 'Login']);
     }
 
-    public function verifyLogin(Request $request)
+    public function verifyLogin(VerifyLoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:8'
-        ],
-        [
-            /*'required' => 'O campo :attribute deve ser preenchido!',*/
-            'email.required' => 'Você precisa informar um e-mail.',
-            'password.required' => 'Você precisa informar uma senha.',
-            'password.min' => 'Sua senha precisa ter no minimo 8 caracteres.',
-            'email.email' => 'O email deve ser um endereço de email válido.'
-        ]);
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember') ?? false;
         if (Auth::attempt($credentials, $remember)) {

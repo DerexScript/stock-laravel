@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \Illuminate\Http\Request;
 use App\Http\Controllers\LoginController;
 use \App\Http\Controllers\Dashboard;
-
+use App\Mail\Auth\WelcomeMail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +23,10 @@ Route::prefix('auth')->group(function () {
     route::any('/logout', [LoginController::class, 'logout'])->name('auth.logout');
 });
 
+
+Route::any('/teste', function(){
+    \App\Jobs\SendMailJob::dispatch();
+});
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home']);
