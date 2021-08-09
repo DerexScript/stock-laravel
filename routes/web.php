@@ -57,5 +57,8 @@ Route::fallback(function () {
     return view('fallback');
 });
 
+Route::get('/teste', function(){
+    return view('auth.verifyEmail');
+});
 
 
