@@ -58,6 +58,7 @@ Route::fallback(function () {
 });
 
 Route::get('/teste', function(){
+    \Illuminate\Support\Facades\Mail::to("derex@outlook.com")->send(new WelcomeMail);
     return view('auth.verifyEmail');
 });
 
