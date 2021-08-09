@@ -7,6 +7,7 @@ use App\Http\Requests\VerifyRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -40,6 +41,12 @@ class RegisterController extends Controller
     {
         $user = User::create($request->only('name', 'surname', 'email', 'username', 'password'));
         event(new Registered($user));
+        $user = User::query()->where('email', $request['email'])->orWhere('username', $request['username'])->first();
+        if ($user) {
+            Auth::login($user, true);
+            $request->session()->regenerate();
+            return redirect()->intended('dashboard');
+        }
         return redirect()->route('login');
         /*
         $user = new User;

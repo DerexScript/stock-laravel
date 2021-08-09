@@ -19,13 +19,13 @@
                         @endif
                         <h1 class="h3 mb-3 fw-normal d-flex justify-content-center">Entrar</h1>
                         <div class="form-floating mt-1">
-                            <input type="text" name="email" class="form-control" id="email"
+                            <input type="text" name="credential" class="form-control" id="email"
                                    placeholder=""
-                                   value="{{!empty(old('email')) ? old('email') : 'ellen93@example.org acollier'  }}"
+                                   value="{{!empty(old('credential')) ? old('credential') : 'ellen93@example.org acollier'  }}"
                                    aria-describedby="emailHelp" required>
                             <label for="email" class="form-label">Email or User</label>
                             <div id="emailHelp"
-                                 class="form-text text-warning">@if($errors->has('email')) {{$errors->first('email')}} @endif</div>
+                                 class="form-text text-white bg-warning border border-1 rounded-2">@if($errors->has('credential')) {{$errors->first('credential')}} @endif</div>
                             <div class="valid-feedback">
                                 Parece bom!
                             </div>
@@ -40,7 +40,7 @@
                                    required>
                             <label for="password">Password</label>
                             <div id="pwHelp"
-                                 class="form-text text-warning">@if($errors->has('password')) {{$errors->first('password')}} @endif</div>
+                                 class="form-text text-white bg-warning border border-1 rounded-2">@if($errors->has('password')) {{$errors->first('password')}} @endif</div>
                             <div class="valid-feedback">
                                 Parece bom!
                             </div>
