@@ -59,8 +59,9 @@ Route::fallback(function () {
 
 Route::get('/teste', function (Request $request) {
     try {
-        Redis:set('asd', '123456');
-        $redis = Redis::get("asd");
+
+        Redis::set("key:asd", '123455');
+        $redis = Redis::get("key:asd");
         echo 'redis working'.$redis;
     } catch (\Predis\Connection\ConnectionException $e) {
         echo 'error connection redis';
