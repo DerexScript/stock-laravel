@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,14 +53,17 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/', [Dashboard::class, 'index'])->middleware('verified')->name('dashboard');
 });
 
-
 Route::fallback(function () {
     return view('fallback');
 });
 
-
-Route::get('/teste', function(){
-    return view('auth.verifyEmail');
+Route::get('/teste', function (Request $request) {
+    try {
+        $redis = Redis::get("user");
+        echo 'redis working';
+    } catch (\Predis\Connection\ConnectionException $e) {
+        echo 'error connection redis';
+    }
 });
 
 
