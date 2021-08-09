@@ -3,5 +3,11 @@
 @section('title', $title)
 
 @section('content')
-    <h1 class="d-flex justify-content-center">Welcome</h1>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <h1>Welcome</h1>
+            </div>
+        </div>
+    </div>
 @endsection
