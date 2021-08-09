@@ -44,9 +44,9 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="confirmPassword" class="form-label">Confirm Password</label>
-                        <input type="password" value="password" name="confirmPassword" class="form-control" id="confirmPassword" aria-describedby="confirmPasswordHelp">
-                        <div id="confirmPasswordHelp" class="form-text text-warning">@if($errors->has('confirmPassword')) {{$errors->first('confirmPassword')}} @endif</div>
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                        <input type="password" value="password" name="password_confirmation" class="form-control" id="password_confirmation" aria-describedby="password_confirmationHelp">
+                        <div id="password_confirmationHelp" class="form-text text-warning">@if($errors->has('password_confirmation')) {{$errors->first('password_confirmation')}} @endif</div>
                     </div>
 
                     <div class="col-12">

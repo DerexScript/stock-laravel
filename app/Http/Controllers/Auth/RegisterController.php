@@ -39,7 +39,8 @@ class RegisterController extends Controller
      */
     public function store(VerifyRegisterRequest $request)
     {
-        $user = User::create($request->only('name', 'surname', 'email', 'username', 'password'));
+        //$user = User::create($request->only('name', 'surname', 'email', 'username', 'password'));
+        $user = User::create($request->all());
         event(new Registered($user));
         $user = User::query()->where('email', $request['email'])->orWhere('username', $request['username'])->first();
         if ($user) {
