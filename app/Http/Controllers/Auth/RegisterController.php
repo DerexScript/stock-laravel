@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VerifyRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -38,7 +39,9 @@ class RegisterController extends Controller
     public function store(VerifyRegisterRequest $request)
     {
         $credentials = $request->only('name', 'surname', 'email', 'username', 'password');
-        User::create($credentials);
+        $user = User::create($credentials);
+        $a = event(new Registered($user));
+        dd($a);
         return redirect()->route('login');
         /*
         $user = new User;

@@ -19,7 +19,7 @@
                         @endif
                         <h1 class="h3 mb-3 fw-normal d-flex justify-content-center">Entrar</h1>
                         <div class="form-floating mt-1">
-                            <input type="text" name="credential" class="form-control" id="email"
+                            <input type="text" name="email" class="form-control" id="email"
                                    placeholder=""
                                    value="{{!empty(old('email')) ? old('email') : 'ellen93@example.org acollier'  }}"
                                    aria-describedby="emailHelp" required>

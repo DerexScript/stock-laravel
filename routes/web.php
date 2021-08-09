@@ -5,7 +5,8 @@ use \Illuminate\Http\Request;
 use \App\Http\Controllers\Auth\RegisterController;
 use \App\Http\Controllers\Auth\LoginController;
 use \App\Http\Controllers\Dashboard;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,6 @@ use \App\Http\Controllers\Dashboard;
 |
 */
 
-
 Route::prefix('auth')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/login', [LoginController::class, 'verifyLogin'])->name('auth.verifyLogin');
@@ -28,15 +28,38 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.store');
 });
 
+Route::get('/email/verify', function (Request $request) {
+    return view('auth.verifyEmail');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect()->route('virifiedSucess');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    //dd($request->user());
+    //$a = new MustVerifyEmail;
+    //$a->sendEmailVerificationNotification();
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/email/virified/sucess', function () {
+    return view('auth.emailVerifiedSucess');
+})->name('virifiedSucess');
+
 Route::get('/', function () {
     return view('home', ['title' => 'Home']);
 })->name('home');
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('/', [Dashboard::class, 'index'])->middleware('auth')->name('dashboard');
+    Route::get('/', [Dashboard::class, 'index'])->middleware('verified')->name('dashboard');
 });
 
 Route::fallback(function () {
     return view('fallback');
 });
+
+
 
