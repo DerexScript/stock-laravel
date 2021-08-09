@@ -1,6 +1,6 @@
 @extends('templates.base')
 
-@section('title', 'Verify Email')
+@section('title', 'Confirme seu email')
 
 @section('content')
     <div class="container mt-4">
