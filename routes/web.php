@@ -62,7 +62,7 @@ Route::get('/teste', function (Request $request) {
 
         Redis::set("key:asd", '123455');
         $redis = Redis::get("key:asd");
-        echo 'redis working'.$redis;
+        echo 'redis working '.$redis;
     } catch (\Predis\Connection\ConnectionException $e) {
         echo 'error connection redis';
     }
