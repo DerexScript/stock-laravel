@@ -57,13 +57,4 @@ Route::fallback(function () {
     return view('fallback');
 });
 
-Route::get('/teste', function (Request $request) {
-    try {
-        $redis = Redis::get("user");
-        echo 'redis working';
-    } catch (\Predis\Connection\ConnectionException $e) {
-        echo 'error connection redis';
-    }
-});
-
 
