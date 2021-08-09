@@ -15,10 +15,17 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link {{Route::currentRouteNamed('login') ? 'active' : ''}} border border-2 border-primary rounded-3"
+                        <a class="nav-link {{Route::currentRouteNamed('login') ? 'active' : ''}} border border-2 border-primary rounded-3 me-1"
                            aria-current="page" href="{{ route('login') }}">Login
                         </a>
                     </li>
+                    @if(Route::currentRouteNamed('auth.create') || Route::currentRouteNamed('login'))
+                        <li class="nav-item">
+                            <a class="nav-link {{Route::currentRouteNamed('auth.create') ? 'active' : ''}} border border-2 border-primary rounded-3"
+                               aria-current="page" href="{{ route('auth.create') }}">Register
+                            </a>
+                        </li>
+                    @endif
                 @endguest
                 @auth
                     <li class="nav-item">

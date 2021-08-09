@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VerifyRegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -36,7 +37,18 @@ class RegisterController extends Controller
      */
     public function store(VerifyRegisterRequest $request)
     {
-        echo "asd";
+        $credentials = $request->only('name', 'surname', 'email', 'username', 'password');
+        User::create($credentials);
+        return redirect()->route('login');
+        /*
+        $user = new User;
+        $user->name = $request['name'];
+        $user->surname = $request['surname'];
+        $user->email = $request['email'];
+        $user->username = $request['username'];
+        $user->password = $request['password'];
+        $user->save();
+        */
     }
 
     /**
