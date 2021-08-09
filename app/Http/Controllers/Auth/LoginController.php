@@ -22,14 +22,15 @@ class LoginController extends Controller
 
     public function verifyLogin(VerifyLoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('credential', 'password');
         $remember = $request->has('remember') ?? false;
 
-        //$user = User::query()->where('email', $credentials["credential"])->orWhere('username', $credentials["credential"])->first();
+        $user = User::query()->where('email', $credentials["credential"])->orWhere('username',
+            $credentials["credential"])->first();
 
-        //if ($user) {
-        if(Auth::attempt($credentials, $remember)){
-            //Auth::login($user, $remember);
+        //if(Auth::attempt($credentials, $remember)){
+        if ($user) {
+            Auth::login($user, $remember);
             $request->session()->regenerate();
             return redirect()->intended('dashboard');
         }

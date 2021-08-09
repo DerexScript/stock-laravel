@@ -24,7 +24,7 @@ class VerifyLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
+            'credential' => 'required',
             'password' => 'required|min:8'
         ];
     }
@@ -32,10 +32,9 @@ class VerifyLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'Você precisa informar um e-mail ou usuario valido.',
+            'credential.required' => 'Você precisa informar um e-mail ou usuario valido.',
             'password.required' => 'Você precisa informar uma senha.',
-            'password.min' => 'Sua senha precisa ter no minimo 8 caracteres.',
-            'email.email' => 'O email deve ser um endereço de email válido.'
+            'password.min' => 'Sua senha precisa ter no minimo 8 caracteres.'
         ];
     }
 
