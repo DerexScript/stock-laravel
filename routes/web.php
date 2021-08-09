@@ -57,4 +57,14 @@ Route::fallback(function () {
     return view('fallback');
 });
 
+Route::get('/teste', function (Request $request) {
+    try {
+        $redis = Redis::get("asd");
+        echo 'redis working'.$redis;
+    } catch (\Predis\Connection\ConnectionException $e) {
+        echo 'error connection redis';
+    }
+    //\Illuminate\Support\Facades\Mail::send(new \App\Mail\);
+});
+
 
