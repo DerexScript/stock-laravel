@@ -40,7 +40,6 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
 Route::get('/email/virified/sucess', function () {
     return view('auth.emailVerifiedSucess');
 })->name('virifiedSucess');
@@ -53,12 +52,13 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/', [Dashboard::class, 'index'])->middleware('verified')->name('dashboard');
 });
 
+
 Route::fallback(function () {
     return view('fallback');
 });
 
+
 Route::get('/teste', function(){
-    \Illuminate\Support\Facades\Mail::to("derex@outlook.com")->send(new WelcomeMail);
     return view('auth.verifyEmail');
 });
 
