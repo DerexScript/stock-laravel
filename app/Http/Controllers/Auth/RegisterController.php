@@ -38,10 +38,8 @@ class RegisterController extends Controller
      */
     public function store(VerifyRegisterRequest $request)
     {
-        $credentials = $request->only('name', 'surname', 'email', 'username', 'password');
-        $user = User::create($credentials);
-        $a = event(new Registered($user));
-        dd($a);
+        $user = User::create($request->only('name', 'surname', 'email', 'username', 'password'));
+        event(new Registered($user));
         return redirect()->route('login');
         /*
         $user = new User;

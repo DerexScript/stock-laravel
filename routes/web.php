@@ -1,12 +1,11 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \Illuminate\Http\Request;
-use \App\Http\Controllers\Auth\RegisterController;
-use \App\Http\Controllers\Auth\LoginController;
-use \App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Dashboard;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,6 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/login', [LoginController::class, 'verifyLogin'])->name('auth.verifyLogin');
     Route::any('/logout', [LoginController::class, 'logout'])->name('auth.logout');
-
     Route::get('/register', [RegisterController::class, 'create'])->name('auth.create');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.store');
 });
@@ -38,12 +36,10 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
-    //dd($request->user());
-    //$a = new MustVerifyEmail;
-    //$a->sendEmailVerificationNotification();
     $request->user()->sendEmailVerificationNotification();
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 Route::get('/email/virified/sucess', function () {
     return view('auth.emailVerifiedSucess');
