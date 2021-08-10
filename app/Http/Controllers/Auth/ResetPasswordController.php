@@ -20,13 +20,22 @@ class ResetPasswordController extends Controller
 
     public function sendPwResetLink(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
-        $status = Password::sendResetLink(
+        $request->validate([
+            'email' => 'required|email'
+        ], [
+            'email.required' => 'Você deve informar um endereço de e-mail.',
+            'email.email' => 'Você deve informar um endereço de e-mail valido.'
+        ]);
+        \App\Jobs\SendResetLinkJob::dispatch(new \Illuminate\Support\Facades\Password(), $request->only('email'));
+        return back()->with(['status' => 'Em alguns instante você recebera um e-mail, com instruções para redefinir sua senha.']);
+        /*
+         $status = Password::sendResetLink(
             $request->only('email')
         );
         return $status === Password::RESET_LINK_SENT
             ? back()->with(['status' => __($status)])
             : back()->withErrors(['email' => __($status)]);
+        */
     }
 
     public function showViewReset(Request $request, $token)

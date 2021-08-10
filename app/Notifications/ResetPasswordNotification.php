@@ -42,12 +42,13 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         $url = config('app.url')."/reset-password/{$this->token}?email={$notifiable->email}";
+        $time = config('auth.passwords.'.config('auth.defaults.passwords').'.expire');
         return (new MailMessage)
             ->subject('Notificação de redefinição de senha')
             ->greeting("Olá {$notifiable->name}!")
             ->line('Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta.')
             ->action('Redefinir senha', $url)
-            ->line('Este link de redefinição de senha irá expirar em :count minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])
+            ->line("Este link de redefinição de senha irá expirar em {$time} minutos.") //, ['count' => ]
             ->line('Se você não solicitou uma redefinição de senha, nenhuma ação adicional será necessária.')
             ->salutation('Atenciosamente: '.config('app.name'));
         }

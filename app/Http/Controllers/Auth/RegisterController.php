@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VerifyRegisterRequest;
+use App\Jobs\SendEmailVerificationJob;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -53,7 +54,8 @@ class RegisterController extends Controller
         ])->setRememberToken(Str::random(60));
         $user->save();
 
-        event(new Registered($user));
+        //event(new Registered($user));
+        SendEmailVerificationJob::dispatch($user);
 
         Auth::login($user, true);
         $request->session()->regenerate();

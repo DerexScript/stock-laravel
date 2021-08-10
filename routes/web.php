@@ -29,6 +29,7 @@ Route::prefix('auth')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])->name('auth.create');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.store');
 });
+
 //-------------------verificando-email-apos-registro-------------------------
 Route::get('/email/verify', function (Request $request) {
     return view('auth.verifyEmail');
@@ -49,7 +50,6 @@ Route::get('/email/virified/sucess', function () {
 })->name('virifiedSucess');
 //----------------------------------------------------------------------------
 
-
 //---------------------Resetando-a-senha-do-usuario---------------------------
 Route::get('/forgot-password',
     [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
@@ -64,7 +64,6 @@ Route::post('/reset-password',
     [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
 //----------------------------------------------------------------------------
 
-
 Route::get('/', function () {
     return view('home', ['title' => 'Home']);
 })->name('home');
@@ -76,22 +75,6 @@ Route::prefix('dashboard')->group(function () {
 Route::fallback(function () {
     return view('fallback');
 });
-
-Route::get('/teste', function (Request $request) {
-    /*
-    try {
-        Redis::set("key:asd", '123455');
-        $redis = Redis::get("key:asd");
-        echo 'redis working '.$redis;
-    } catch (\Predis\Connection\ConnectionException $e) {
-        echo 'error connection redis';
-    }
-    */
-    return new \App\Mail\TesteMail();
-    //\Illuminate\Support\Facades\Mail::to('derex@outlook.com.br')->send(new \App\Mail\TesteMail());
-    //echo "Email enviado com sucesso!".env('APP_URL', 'asd')."   ".config('app.url');
-});
-
 
 
 
