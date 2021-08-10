@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -40,15 +42,24 @@ class RegisterController extends Controller
     public function store(VerifyRegisterRequest $request)
     {
         //$user = User::create($request->only('name', 'surname', 'email', 'username', 'password'));
-        $user = User::create($request->all());
+        //$user = User::create($request->all());
+        $user = new User();
+        $user->forceFill([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'username' => $request->username,
+            'password' => Hash::make($request->password)
+        ])->setRememberToken(Str::random(60));
+        $user->save();
+
         event(new Registered($user));
-        $user = User::query()->where('email', $request['email'])->orWhere('username', $request['username'])->first();
-        if ($user) {
-            Auth::login($user, true);
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
-        }
-        return redirect()->route('login');
+
+        Auth::login($user, true);
+        $request->session()->regenerate();
+        return redirect()->intended('dashboard');
+
+
         /*
         $user = new User;
         $user->name = $request['name'];
