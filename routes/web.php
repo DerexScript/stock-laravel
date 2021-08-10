@@ -1,12 +1,15 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard;
+use \App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Redis;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,7 @@ Route::prefix('auth')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])->name('auth.create');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.store');
 });
-
+//-------------------verificando-email-apos-registro-------------------------
 Route::get('/email/verify', function (Request $request) {
     return view('auth.verifyEmail');
 })->middleware('auth')->name('verification.notice');
@@ -44,6 +47,23 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/email/virified/sucess', function () {
     return view('auth.emailVerifiedSucess');
 })->name('virifiedSucess');
+//----------------------------------------------------------------------------
+
+
+//---------------------Resetando-a-senha-do-usuario---------------------------
+Route::get('/forgot-password',
+    [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password',
+    [ResetPasswordController::class, 'sendPwResetLink'])->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}',
+    [ResetPasswordController::class, 'showViewReset'])->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password',
+    [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+//----------------------------------------------------------------------------
+
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home']);
@@ -58,15 +78,20 @@ Route::fallback(function () {
 });
 
 Route::get('/teste', function (Request $request) {
+    /*
     try {
-
         Redis::set("key:asd", '123455');
         $redis = Redis::get("key:asd");
         echo 'redis working '.$redis;
     } catch (\Predis\Connection\ConnectionException $e) {
         echo 'error connection redis';
     }
-    //\Illuminate\Support\Facades\Mail::send(new \App\Mail\);
+    */
+    //return new \App\Mail\TesteMail();
+    \Illuminate\Support\Facades\Mail::to('derex@outlook.com.br')->send(new \App\Mail\TesteMail());
+    echo "Email enviado com sucesso!";
 });
+
+
 
 

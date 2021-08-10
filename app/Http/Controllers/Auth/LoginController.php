@@ -7,6 +7,7 @@ use App\Http\Requests\VerifyLoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -30,9 +31,14 @@ class LoginController extends Controller
 
         //if(Auth::attempt($credentials, $remember)){
         if ($user) {
-            Auth::login($user, $remember);
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            $pwIsCorrect = Hash::check($credentials["password"], $user->password);
+            //dd(Hash::make("password1"));
+
+            if ($pwIsCorrect) {
+                Auth::login($user, $remember);
+                $request->session()->regenerate();
+                return redirect()->intended('dashboard');
+            }
         }
 
         return back()->withErrors([

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Mail\auth;
+namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmRegistrationMail extends Mailable
+class TesteMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +28,6 @@ class ConfirmRegistrationMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.ConfirmRegistration');
+        return $this->markdown('mail.testeMail');
     }
 }
