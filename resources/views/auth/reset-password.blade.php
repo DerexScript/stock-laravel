@@ -3,9 +3,6 @@
 @section('title', $title)
 
 @section('content')
-    <pre>
-        {{$errors}}
-    </pre>
     <main class="mt-5" style="background-color: #ccc;">
         <div class="container">
             <div class="row d-flex justify-content-center">
@@ -15,19 +12,20 @@
                             <img class="mb-4" src="{{ asset('assets/img/brand/bootstrap-logo.svg') }}" alt="" width="72"
                                  height="57">
                         </a>
-                        @if ($errors->has('email'))
+                        @if ($errors->has('email') || $errors->has('token'))
                             <div class="alert alert-danger" role="alert">
-                                {{ $errors->first('email') }}
+                                {{ $errors->first('email') }} {{ $errors->first('token') }}
                             </div>
                         @endif
                         <h1 class="h3 mb-3 fw-normal d-flex justify-content-center">Mudar Senha.</h1>
                         <div class="form-floating mt-1">
                             <input type="email" name="email"
-                                   class="form-control-plaintext {{-- $errors->has('email') ? 'is-invalid' : '' --}}"
+                                   class="form-control-plaintext{{-- $errors->has('email') ? 'is-invalid' : '' --}}"
                                    id="email"
                                    placeholder="Email"
                                    value="{{ $email }}"
-                                   required>
+                                   required
+                                   readonly>
                             <label for="email" class="form-label"></label>
                         </div>
 
@@ -50,10 +48,9 @@
                                 Por favor, preencha com uma senha valida.
                             </div>
                         </div>
-
                         <div class="form-floating mt-1">
                             <input type="password" name="password_confirmation"
-                                   class="form-control {{-- $errors->has('password_confirmation') ? 'is-invalid' : '' --}}"
+                                   class="form-control{{-- $errors->has('password_confirmation') ? 'is-invalid' : '' --}}"
                                    id="password_confirmation"
                                    placeholder=""
                                    value="{{ !empty(old('password_confirmation')) ? old('password_confirmation') : '' }}"

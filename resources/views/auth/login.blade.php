@@ -17,6 +17,11 @@
                                 {{ $errors->first('loginFailed') }}
                             </div>
                         @endif
+                        @if (Session::has('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ Session::get('status') }}
+                            </div>
+                        @endif
                         <h1 class="h3 mb-3 fw-normal d-flex justify-content-center">Entrar</h1>
                         <div class="form-floating mt-1">
                             <input type="text" name="credential"

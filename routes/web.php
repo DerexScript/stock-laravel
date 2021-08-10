@@ -87,9 +87,9 @@ Route::get('/teste', function (Request $request) {
         echo 'error connection redis';
     }
     */
-    //return new \App\Mail\TesteMail();
+    return new \App\Mail\TesteMail();
     //\Illuminate\Support\Facades\Mail::to('derex@outlook.com.br')->send(new \App\Mail\TesteMail());
-    echo "Email enviado com sucesso!".env('APP_URL', 'asd')."   ".config('app.url');
+    //echo "Email enviado com sucesso!".env('APP_URL', 'asd')."   ".config('app.url');
 });
 
 

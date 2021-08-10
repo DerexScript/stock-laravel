@@ -41,17 +41,20 @@ class ResetPasswordController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
+        ], [
+            'token.required' => 'Erro com o token.',
+            'email.required' => 'Você precisa informar um email.',
+            'email.email' => 'Você precisa informar um email valido.',
+            'password.required' => 'Você precisa informar uma senha.',
+            'password.min' => 'A senha deve ter no minimo 8 caracteres.',
+            'password.confirmed' => 'O campo confirmação da senha não corresponde com o campo da senha.',
         ]);
-
-
         $credentials = $request->only('email', 'password', 'password_confirmation', 'token');
-
         $status = Password::reset($credentials, function ($user, $password) {
             $user->forceFill(['password' => Hash::make($password)])->setRememberToken(Str::random(60));
             $user->save();
             event(new PasswordReset($user));
         });
-
         return $status === Password::PASSWORD_RESET ? redirect()->route('login')->with('status',
             __($status)) : back()->withErrors(['email' => [__($status)]]);
     }

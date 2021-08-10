@@ -12,16 +12,14 @@ class ResetPasswordNotification extends Notification
 {
     use Queueable;
     public $token;
-    public $email;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token="", $email="")
+    public function __construct($token="")
     {
         $this->token = $token;
-        $this->email = $email;
     }
 
     /**
@@ -43,16 +41,15 @@ class ResetPasswordNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        //dd($notifiable->email);
         $url = config('app.url')."/reset-password/{$this->token}?email={$notifiable->email}";
         return (new MailMessage)
             ->subject('Notificação de redefinição de senha')
-            ->greeting("Olá {$notifiable->name}")
+            ->greeting("Olá {$notifiable->name}!")
             ->line('Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta.')
             ->action('Redefinir senha', $url)
-            ->line('Este link de redefinição de senha irá expirar em: ', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])
+            ->line('Este link de redefinição de senha irá expirar em :count minutos.', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])
             ->line('Se você não solicitou uma redefinição de senha, nenhuma ação adicional será necessária.')
-            ->salutation('Atenciosamente '.config('app.name'));
+            ->salutation('Atenciosamente: '.config('app.name'));
         }
 
     /**
