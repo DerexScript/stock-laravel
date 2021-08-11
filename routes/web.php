@@ -40,9 +40,10 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
-    \App\Jobs\SendEmailVerificationNotificationJob::dispatch($request->user());
+    //\App\Jobs\SendEmailVerificationNotificationJob::dispatch($request->user());
     //$request->user()->sendEmailVerificationNotification();
-    return back()->with('message', 'Link de verificação enviado!');
+    echo "OK";
+    //return back();
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/email/virified/sucess', function () {
