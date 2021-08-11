@@ -84,5 +84,4 @@ Route::get('/teste', function () {
 //    echo "User Value: ".$userValue;
 
     \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
-
 });
