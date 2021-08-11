@@ -16,37 +16,37 @@
                     <div class="col-md-6">
                         <label for="name" class="form-label">Nome</label>
                         <input value="Derex" type="text" name="name" class="form-control" id="name" aria-describedby="nameHelp">
-                        <div id="nameHelp" class="form-text text-warning">@if($errors->has('name')) {{$errors->first('name')}} @endif</div>
+                        <div id="nameHelp" class="form-text text-info">@if($errors->has('name')) {{$errors->first('name')}} @endif</div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="surname" class="form-label">Sobrenome</label>
                         <input type="text" value="Script" name="surname" class="form-control" id="surname" aria-describedby="surnameHelp">
-                        <div id="surnameHelp" class="form-text text-warning">@if($errors->has('surname')) {{$errors->first('surname')}} @endif</div>
+                        <div id="surnameHelp" class="form-text text-info">@if($errors->has('surname')) {{$errors->first('surname')}} @endif</div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" value="Derex@outlook.com.br" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text text-warning">@if($errors->has('email')) {{$errors->first('email')}} @endif</div>
+                        <div id="emailHelp" class="form-text text-info">@if($errors->has('email')) {{$errors->first('email')}} @endif</div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="username" class="form-label">Username</label>
                         <input type="text"  value="Derex" name="username" maxlength="15" class="form-control" id="username" aria-describedby="usernameHelp">
-                        <div id="usernameHelp" class="form-text text-warning">@if($errors->has('username')) {{$errors->first('username')}} @endif</div>
+                        <div id="usernameHelp" class="form-text text-info">@if($errors->has('username')) {{$errors->first('username')}} @endif</div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" value="password" name="password" class="form-control" id="password" aria-describedby="passwordHelp">
-                        <div id="passwordHelp" class="form-text text-warning">@if($errors->has('password')) {{$errors->first('password')}} @endif</div>
+                        <div id="passwordHelp" class="form-text text-info">@if($errors->has('password')) {{$errors->first('password')}} @endif</div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="password_confirmation" class="form-label">Confirm Password</label>
                         <input type="password" value="password" name="password_confirmation" class="form-control" id="password_confirmation" aria-describedby="password_confirmationHelp">
-                        <div id="password_confirmationHelp" class="form-text text-warning">@if($errors->has('password_confirmation')) {{$errors->first('password_confirmation')}} @endif</div>
+                        <div id="password_confirmationHelp" class="form-text text-info">@if($errors->has('password_confirmation')) {{$errors->first('password_confirmation')}} @endif</div>
                     </div>
 
                     <div class="col-12">
@@ -55,7 +55,7 @@
                             <label class="form-check-label" for="terms">
                                 Aceito com os <a href="#">termos</a>
                             </label>
-                            <div id="termsHelp" class="form-text text-warning">@if($errors->has('terms')) {{$errors->first('terms')}} @endif</div>
+                            <div id="termsHelp" class="form-text text-info">@if($errors->has('terms')) {{$errors->first('terms')}} @endif</div>
                         </div>
                     </div>
                     <div class="col-12">

@@ -26,6 +26,7 @@ class ResetPasswordController extends Controller
             'email.required' => 'Você deve informar um endereço de e-mail.',
             'email.email' => 'Você deve informar um endereço de e-mail valido.'
         ]);
+
         /*
         \App\Jobs\SendResetLinkJob::dispatch(new \Illuminate\Support\Facades\Password(), $request->only('email'));
         return back()->with(['status' => 'Em alguns instante você recebera um e-mail, com instruções para redefinir sua senha.']);
@@ -34,9 +35,13 @@ class ResetPasswordController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
+
+        $status1 = (__($status) == "We have emailed your password reset link!") ? "Enviamos seu link de redefinição de senha por e-mail!" : __($status);
+        $status2 = (__($status) == "We can't find a user with that email address.") ? "Não conseguimos encontrar um usuário com esse endereço de e-mail." : __($status);
+
         return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            ? back()->with(['status' => $status1])
+            : back()->withErrors(['email' => $status2]);
 
     }
 

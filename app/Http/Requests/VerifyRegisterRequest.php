@@ -43,22 +43,24 @@ class VerifyRegisterRequest extends FormRequest
             'surname.required' => 'Você precisa informar um sobrenome.',
             'surname.min' => 'Você precisa informar um sobrenome com no minimo 4 caracteres',
 
-            'email.required' => 'Você precisa informar um e-mail.',
-            'email.email' => 'Você precisa informar um e-mail valido.',
+            'email.required' => '* Você precisa informar um e-mail.',
+            'email.email' => '* Você precisa informar um e-mail valido.',
+            'email.unique' => '* O email já consta como registrado em nosso sistema.',
 
-            'username.required' => 'Você precisa informar um nome de usuario.',
-            'username.regex' => 'Usuario informado não atende aos requisitos.',
+            'username.required' => '* Você precisa informar um nome de usuario.',
+            'username.regex' => '* Usuario informado não atende aos requisitos.',
+            'username.unique' => '* O nome de usuário não está disponivel.',
 
-            'password.required' => 'Você precisa informar uma senha',
-            'password.min' => 'Sua senha precisa ter no minimo 8 caracteres.',
-            'password.confirmed' => 'O campo senha e confirmar senha devem ser iguais.',
+            'password.required' => '* Você precisa informar uma senha',
+            'password.min' => '* Sua senha precisa ter no minimo 8 caracteres.',
+            'password.confirmed' => '* O campo senha e confirmar senha devem ser iguais.',
             // 'password.required_with' => 'Você tambem precisa informar o campo de confirmação de senha',
             // 'password.same' => 'O campo senha e confirmar senha devem ser iguais.',
 
             'password_confirmation.required' => 'O campo de confirmação da senha é obrigatório.',
             'password_confirmation.min' => 'A senha de confirmação deve ter pelo menos 8 caracteres.',
 
-            'terms.required' => 'Você precisa aceitar os termos.',
+            'terms.required' => '* Você precisa aceitar os termos.',
         ];
     }
 

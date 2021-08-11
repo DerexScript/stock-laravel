@@ -3,7 +3,7 @@
 @section('title', $title)
 
 @section('content')
-    <main class="mt-5" style="background-color: #ccc;">
+     <main class="mt-5" style="background-color: #ccc;">
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-8">
@@ -12,6 +12,12 @@
                             <img class="mb-4" src="{{ asset('assets/img/brand/estoque.png') }}" alt="" width="72"
                                  height="57">
                         </a>
+                        @if ($errors->has('email'))
+                            <div class="alert alert-warning" role="alert">
+                                {{ $errors->first('email') }}
+                            </div>
+                        @endif
+
                         @if (Session::has('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ Session::get('status') }}
