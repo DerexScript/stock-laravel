@@ -17,3 +17,4 @@ commit.sh
 commit.bat
 composer
 composer.lock
+package-lock.json
