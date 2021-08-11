@@ -16,3 +16,4 @@ yarn-error.log
 commit.sh
 commit.bat
 composer
+package-lock.json
