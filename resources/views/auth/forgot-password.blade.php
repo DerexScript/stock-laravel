@@ -9,7 +9,7 @@
                 <div class="col-8">
                     <form class="needs-validation" novalidate action="{{ route('password.email') }}" method="POST">
                         <a class="d-flex justify-content-center" href="">
-                            <img class="mb-4" src="{{ asset('assets/img/brand/bootstrap-logo.svg') }}" alt="" width="72"
+                            <img class="mb-4" src="{{ asset('assets/img/brand/estoque.png') }}" alt="" width="72"
                                  height="57">
                         </a>
                         @if (Session::has('status'))

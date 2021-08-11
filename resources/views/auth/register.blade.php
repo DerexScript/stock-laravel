@@ -3,12 +3,12 @@
 @section('title', $title)
 
 @section('content')
-    <div class="container mt-5 mb-5 p-1">
+    <div class="container mt-5 mb-5 p-1" style="background-color: #ccc;">
         <div class="row">
             <div class="col-md-12">
-                <form class="row g-3 p-2 border border-2 border-dark rounded" action="{{route('auth.store')}}" method="POST">
+                <form class="row g-3 p-2" action="{{route('auth.store')}}" method="POST">
                     <a class="d-flex justify-content-center" href="">
-                        <img class="mb-4" src="{{asset('assets/img/brand/bootstrap-logo.svg')}}" alt="" width="72"
+                        <img class="mb-4" src="{{asset('assets/img/brand/estoque.png')}}" alt="" width="72"
                              height="57">
                     </a>
                     <h1 class="h3 mb-3 fw-normal d-flex justify-content-center">Registrar</h1>
