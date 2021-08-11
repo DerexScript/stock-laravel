@@ -75,7 +75,3 @@ Route::prefix('dashboard')->group(function () {
 Route::fallback(function () {
     return view('fallback');
 });
-
-Route::get('/teste', function(){
-   dd(env('DB_HOST'));
-});

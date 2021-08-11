@@ -5,7 +5,7 @@
 @section('content')
     <main class="mt-5" style="background-color: #ccc;">
         <div class="container">
-            <div class="row d-flex justify-content-center">
+            <div class="row justify-content-center">
                 <div class="col-8">
                     <form class="needs-validation" novalidate action="{{ route('auth.verifyLogin') }}" method="POST">
                         <a class="d-flex justify-content-center" href="">
@@ -65,13 +65,17 @@
                             </label>
                         </div>
                         <button class="w-100 btn btn-primary" type="submit">Entrar</button>
-                        <p class="text-info">Não tem uma conta?
-                            <a href="{{ route('auth.create') }}"
-                               class="text-decoration-none text-primary">Registre-se</a>
-                            <a href="{{ route('password.request') }}"
-                               class="text-decoration-none text-primary float-end">Redefinir
-                                Senha</a>
-                        </p>
+                        <div class="d-flex justify-content-between">
+                            <p class="text-info me-2">Não tem uma conta?
+                                <a href="{{ route('auth.create') }}"
+                                   class="text-decoration-none link-primary">Registre-se</a>
+                            </p>
+                            <p class="ms-2">
+                                <a href="{{ route('password.request') }}"
+                                   class="text-decoration-none link-primary">Redefinir
+                                    Senha</a>
+                            </p>
+                        </div>
                         <p class="mt-5 mb-3 text-muted">&copy; 2021–{{ date('Y') }}</p>
                         @CSRF
                     </form>

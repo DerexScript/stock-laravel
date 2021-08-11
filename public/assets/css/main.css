@@ -1,0 +1,20 @@
+nav {
+    background: linear-gradient(to right, #3f9463, #b7bb86) !important;
+}
+
+.footer{
+    background: linear-gradient(to right, #3f9463, #b7bb86) !important;
+}
+
+nav .nav-link:hover {
+    color: #0a58ca !important;
+}
+
+#userMenuLink {
+    color: #1a1e21;
+    font-weight: bold;
+}
+
+#userMenuLink:hover {
+    color: #0a58ca;
+}
