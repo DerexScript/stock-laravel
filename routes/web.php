@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard;
 use \App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Redis;
 
 
 
@@ -77,5 +76,6 @@ Route::fallback(function () {
     return view('fallback');
 });
 
-
-
+Route::get('/teste', function(){
+   dd(env('DB_HOST'));
+});

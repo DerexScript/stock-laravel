@@ -21,7 +21,7 @@ class SendEmailVerificationNotificationJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user="")
+    public function __construct($user)
     {
         $this->user = $user;
     }
