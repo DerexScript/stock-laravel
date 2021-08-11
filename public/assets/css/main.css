@@ -18,3 +18,7 @@ nav .nav-link:hover {
 #userMenuLink:hover {
     color: #0a58ca;
 }
+
+body{
+    background: linear-gradient(to right,#4d3d5e,#88f6ae);
+}
