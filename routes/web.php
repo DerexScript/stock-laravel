@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Dashboard;
 use \App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-
+use Illuminate\Support\Facades\Redis;
 
 
 /*
@@ -34,17 +35,17 @@ Route::get('/email/verify', function (Request $request) {
     return view('auth.verifyEmail');
 })->middleware('auth')->name('verification.notice');
 
+Route::post('/email/verification-notification', function (Request $request) {
+    \App\Jobs\SendEmailVerificationNotificationJob::dispatch($request->user());
+    //$request->user()->sendEmailVerificationNotification();
+    return back();
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect()->route('virifiedSucess');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    //\App\Jobs\SendEmailVerificationNotificationJob::dispatch($request->user());
-    //$request->user()->sendEmailVerificationNotification();
-    echo "OK";
-    //return back();
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/email/virified/sucess', function () {
     return view('auth.emailVerifiedSucess');
@@ -75,4 +76,13 @@ Route::prefix('dashboard')->group(function () {
 
 Route::fallback(function () {
     return view('fallback');
+});
+
+Route::get('/teste', function () {
+//    Illuminate\Support\Facades\Redis::set('user', "Taylor");
+//    $userValue = Illuminate\Support\Facades\Redis::get('user');
+//    echo "User Value: ".$userValue;
+
+    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
+
 });
