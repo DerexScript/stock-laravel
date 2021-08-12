@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Dashboard;
-use \App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Illuminate\Support\Facades\Redis;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Redis;
 */
 
 Route::prefix('auth')->group(function () {
-    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::middleware('guest')->get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/login', [LoginController::class, 'verifyLogin'])->name('auth.verifyLogin');
     Route::any('/logout', [LoginController::class, 'logout'])->name('auth.logout');
     Route::get('/register', [RegisterController::class, 'create'])->name('auth.create');
@@ -70,8 +71,13 @@ Route::get('/', function () {
     return view('home', ['title' => 'Home']);
 })->name('home');
 
+Route::get('/home', function () {
+    return redirect()->route('home');
+});
+
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [Dashboard::class, 'index'])->middleware('verified')->name('dashboard');
+    Route::get('/role', [RoleController::class, 'create'])->middleware('verified')->name('createRole');
 });
 
 Route::fallback(function () {
@@ -82,6 +88,9 @@ Route::get('/teste', function () {
 //    Illuminate\Support\Facades\Redis::set('user', "Taylor");
 //    $userValue = Illuminate\Support\Facades\Redis::get('user');
 //    echo "User Value: ".$userValue;
-
-    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
+//    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
+    echo "TESTE";
 });
+
+
+

@@ -15,6 +15,15 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
+            $table->integer('amount');
+            $table->string('images');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('type_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -26,6 +35,11 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::create('products', function (Blueprint $table) {
+            $table->dropForeign('category_id');
+            $table->dropForeign('type_id');
+            $table->dropForeign('role_id');
+        });
         Schema::dropIfExists('products');
     }
 }

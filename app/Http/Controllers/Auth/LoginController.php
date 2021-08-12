@@ -14,11 +14,11 @@ class LoginController extends Controller
 
     public function login()
     {
-        if (!Auth()->check()) {
-            return view('auth.login', ['title' => 'Login']);
-        } else {
-            return redirect()->route('dashboard');
-        }
+        //if (!Auth()->check()) {
+        return view('auth.login', ['title' => 'Login']);
+        //} else {
+        //return redirect()->route('dashboard');
+        //}
     }
 
     public function verifyLogin(VerifyLoginRequest $request)

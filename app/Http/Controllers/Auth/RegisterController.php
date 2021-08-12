@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VerifyRegisterRequest;
 use App\Jobs\SendEmailVerificationJob;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -31,7 +32,8 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view('auth.register', ['title' => 'Register']);
+        $roles = Role::all();
+        return view('auth.register', ['title' => 'Register', 'roles' => $roles]);
     }
 
     /**
@@ -50,7 +52,8 @@ class RegisterController extends Controller
             'surname' => $request->surname,
             'email' => $request->email,
             'username' => $request->username,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id
         ])->setRememberToken(Str::random(60));
         $user->save();
 
