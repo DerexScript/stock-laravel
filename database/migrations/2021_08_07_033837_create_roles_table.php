@@ -24,9 +24,9 @@ class CreateRolesTable extends Migration
 
         DB::table('roles')->insert([
             'name' => 'default',
-            'view' => true,
-            'edit' => true,
-            'delete' => true
+            'view' => false,
+            'edit' => false,
+            'delete' => false
         ]);
     }
 
