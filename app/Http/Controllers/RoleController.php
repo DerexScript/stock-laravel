@@ -24,7 +24,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('dashboard.roles.create', ['title' => 'Criar Funções']);
+        $roles = Role::all();
+        return view('dashboard.roles.home', ['title' => 'Funções dos usuarios', 'roles' => $roles]);
     }
 
     /**
@@ -35,7 +36,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Role::create($request->all());
+        $role = new Role();
+        $role->forceFill([
+            'name' => $request->name,
+            'view' => false,
+            'edit' => false,
+            'delete' => false
+        ]);
+        $role->save();
+        return redirect()->route('createRole');
     }
 
     /**
@@ -80,6 +90,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        echo $role;
+        //Role::destroy($role);
+        //return redirect()->route('createRole');
     }
 }

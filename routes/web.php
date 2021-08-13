@@ -77,7 +77,11 @@ Route::get('/home', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [Dashboard::class, 'index'])->middleware('verified')->name('dashboard');
-    Route::get('/role', [RoleController::class, 'create'])->middleware('verified')->name('createRole');
+    Route::prefix('role')->group(function () {
+        Route::get('/', [RoleController::class, 'create'])->middleware('verified')->name('createRole');
+        Route::post('/store', [RoleController::class, 'store'])->middleware('verified')->name('storeRole');
+        Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->middleware('verified')->name('destroyRole');
+    });
 });
 
 Route::fallback(function () {
