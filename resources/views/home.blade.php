@@ -3,6 +3,7 @@
 @section('title', $title)
 
 @section('content')
+    <h1>TESTE</h1>
     <div class="container mt-5 mb-2">
         <div class="row">
 
