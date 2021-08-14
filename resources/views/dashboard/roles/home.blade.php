@@ -21,6 +21,10 @@
         </thead>
         <tbody>
         @foreach($roles as $key => $role)
+            <form id="form_{{$key}}" action="{{  route('destroyRole',  $role->id )  }}" method="post">
+                @method('DELETE')
+                @csrf
+            </form>
 
             <tr>
                 <th scope="row">{{$role->id}}</th>
@@ -30,14 +34,7 @@
                 <td>{{$role->delete}}</td>
                 <td>
                     <button class="btn btn-sm btn-outline-primary">Edit</button>
-                    <form action="{{  route('destroyRole', ['id' => $role->id])  }}" method="post">
-                        @method('DELETE')
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </button>
-                    </form>
-
+                    <button type="submit" form="form_{{$key}}" class="btn btn-sm btn-outline-danger">Delete</button>
                 </td>
             </tr>
         @endforeach

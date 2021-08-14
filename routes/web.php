@@ -80,7 +80,7 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('role')->group(function () {
         Route::get('/', [RoleController::class, 'create'])->middleware('verified')->name('createRole');
         Route::post('/store', [RoleController::class, 'store'])->middleware('verified')->name('storeRole');
-        Route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->middleware('verified')->name('destroyRole');
+        Route::delete('/destroy/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
     });
 });
 

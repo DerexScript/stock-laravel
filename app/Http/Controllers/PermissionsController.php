@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Permissions;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class PermissionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -24,8 +24,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        return view('dashboard.roles.home', ['title' => 'Funções dos usuarios', 'roles' => $roles]);
+        //
     }
 
     /**
@@ -36,25 +35,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //Role::create($request->all());
-        $role = new Role();
-        $role->forceFill([
-            'name' => $request->name,
-            'view' => false,
-            'edit' => false,
-            'delete' => false
-        ]);
-        $role->save();
-        return redirect()->route('createRole');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Permissions $permissions)
     {
         //
     }
@@ -62,10 +52,10 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Permissions $permissions)
     {
         //
     }
@@ -74,10 +64,10 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Permissions $permissions)
     {
         //
     }
@@ -85,12 +75,11 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Permissions $permissions)
     {
-        $role->delete();
-        return redirect()->route('createRole');
+        //
     }
 }
