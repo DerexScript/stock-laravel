@@ -15,14 +15,20 @@ class CreatePermissionsTable extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('user');
-            $table->string('category');
             $table->boolean('view');
             $table->boolean('edit');
             $table->boolean('delete');
+
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('category_id');
+
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('category_id')->references('id')->on('categories');
+
             $table->timestamps();
         });
 
+        /*
         DB::table('permissions')->insert([
             'user' => 'default',
             'category' => 'default',
@@ -30,6 +36,7 @@ class CreatePermissionsTable extends Migration
             'edit' => true,
             'delete' => true
         ]);
+        */
     }
 
     /**
@@ -39,6 +46,10 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->dropForeign('role_id');
+            $table->dropForeign('category_id');
+        });
         Schema::dropIfExists('permissions');
     }
 }

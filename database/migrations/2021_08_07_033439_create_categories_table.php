@@ -17,8 +17,6 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->boolean('external');
-            $table->unsignedBigInteger('permission_id');
-            $table->foreign('permission_id')->references('id')->on('permissions');
             $table->timestamps();
         });
     }
@@ -30,10 +28,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign('role_id');
-            $table->dropForeign('permission_id');
-        });
         Schema::dropIfExists('categories');
     }
 }

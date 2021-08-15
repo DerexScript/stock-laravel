@@ -16,17 +16,11 @@ class CreateRolesTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->boolean('view');
-            $table->boolean('edit');
-            $table->boolean('delete');
             $table->timestamps();
         });
 
         DB::table('roles')->insert([
-            'name' => 'default',
-            'view' => false,
-            'edit' => false,
-            'delete' => false
+            'name' => 'default'
         ]);
     }
 

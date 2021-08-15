@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Illuminate\Support\Facades\Redis;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +31,7 @@ Route::prefix('auth')->group(function () {
 });
 
 //-------------------verificando-email-apos-registro-------------------------
-Route::get('/email/verify', function (Request $request) {
+Route::get('/email/verify', function () {
     return view('auth.verifyEmail');
 })->middleware('auth')->name('verification.notice');
 
@@ -54,17 +53,19 @@ Route::get('/email/virified/sucess', function () {
 //----------------------------------------------------------------------------
 
 //---------------------Resetando-a-senha-do-usuario---------------------------
-Route::get('/forgot-password',
-    [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
+Route::prefix('auth')->group(function () {
+    Route::get('/forgot-password',
+        [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
 
-Route::post('/forgot-password',
-    [ResetPasswordController::class, 'sendPwResetLink'])->middleware('guest')->name('password.email');
+    Route::post('/forgot-password',
+        [ResetPasswordController::class, 'sendPwResetLink'])->middleware('guest')->name('password.email');
 
-Route::get('/reset-password/{token}',
-    [ResetPasswordController::class, 'showViewReset'])->middleware('guest')->name('password.reset');
+    Route::get('/reset-password/{token}',
+        [ResetPasswordController::class, 'showViewReset'])->middleware('guest')->name('password.reset');
 
-Route::post('/reset-password',
-    [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+    Route::post('/reset-password',
+        [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+});
 //----------------------------------------------------------------------------
 
 Route::get('/', function () {
@@ -85,7 +86,9 @@ Route::prefix('dashboard')->group(function () {
 });
 
 Route::fallback(function () {
+
     return view('fallback');
+
 });
 
 Route::get('/teste', function () {
