@@ -39,10 +39,7 @@ class RoleController extends Controller
         //Role::create($request->all());
         $role = new Role();
         $role->forceFill([
-            'name' => $request->name,
-            'view' => false,
-            'edit' => false,
-            'delete' => false
+            'name' => $request->name
         ]);
         $role->save();
         return redirect()->route('createRole');

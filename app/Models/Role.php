@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    public $fillable = ['name', 'view', 'edit', 'delete'];
+    public $fillable = ['name'];
 }
