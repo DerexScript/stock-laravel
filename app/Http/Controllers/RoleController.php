@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -126,6 +127,7 @@ class RoleController extends Controller
                     $ru .= "`".$u->name."`, ";
                 }
             }
+            DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 1;");
             return redirect()->back()->withErrors(["relationship" => "Esta função está em uso pelos seguintes usuarios $ru"]);
         }
     }
