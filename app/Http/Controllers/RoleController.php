@@ -87,6 +87,14 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        $request->validate(
+            [
+                'name' => 'unique:roles'
+            ],
+            [
+                'name.unique' => 'Uma função com esse nome já existe.'
+            ]
+        );
         if ($request->input('_token') != '') {
             $update = $role->update($request->all());
             if ($update) {
@@ -109,6 +117,7 @@ class RoleController extends Controller
         $r = Role::with(['category', 'user'])->find($role->id);
         if (count($r->category) === 0 && count($r->user) === 0) {
             $role->delete();
+            DB::statement('ALTER TABLE roles AUTO_INCREMENT=1;');
             return redirect()->back();
         }
         if (count($r->category) > 0) {
@@ -127,7 +136,6 @@ class RoleController extends Controller
                     $ru .= "`".$u->name."`, ";
                 }
             }
-            DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 1;");
             return redirect()->back()->withErrors(["relationship" => "Esta função está em uso pelos seguintes usuarios $ru"]);
         }
     }
