@@ -99,27 +99,11 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        //with() = eaggerload
+        $r = Role::with(['category', 'user'])->first();
 
 
-        $credentials = $role->only('id', 'name');
-        $rules = [
-            'id' => 'exists:jobs,id',
-        ];
-        $validator = Validator::make($credentials, $rules);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withInput($credentials)->withErrors($validator);
-        } else {
-            echo "OK";
-        }
-
-        exit();
-
-
-        return response($credentials)->header('Content-Type', 'application/json');
-        exit();
-
-        return response($role->toJson())->header('Content-Type', 'application/json');
+        return response($r)->header('Content-Type', 'application/json');
         exit();
 
         $role->delete();
