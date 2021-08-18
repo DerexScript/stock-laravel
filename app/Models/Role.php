@@ -11,6 +11,8 @@ class Role extends Model
 
     public $fillable = ['name'];
 
+
+
     public function category()
     {
         //tabela relacionada        tabela pivot

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-
 
 class RoleController extends Controller
 {
@@ -22,7 +20,7 @@ class RoleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function create()
     {
@@ -34,7 +32,7 @@ class RoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -76,7 +74,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('dashboard.roles.edit', ['title' => 'Editar Função', 'role' => $role]);
     }
 
     /**
@@ -88,25 +86,47 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        if ($request->input('_token') != '') {
+            $update = $role->update($request->all());
+            if ($update) {
+                return redirect()->route('createRole');
+            } else {
+                return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar o registro"]);
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Role $role)
     {
         //with() = eaggerload
-        $r = Role::with(['category', 'user'])->first();
-
-
-        return response(count($r->category)." ".count($r->user))->header('Content-Type', 'application/json');
-        exit();
-
-        $role->delete();
-        return redirect()->back();
+        $r = Role::with(['category', 'user'])->find($role->id);
+        if (count($r->category) === 0 && count($r->user) === 0) {
+            $role->delete();
+            return redirect()->back();
+        }
+        if (count($r->category) > 0) {
+            $rc = "";
+            foreach ($r->category as $c) {
+                $rc .= $c->name.", ";
+            }
+            return redirect()->back()->withErrors(["relationship" => "Esta função está relacionada $rc"]);
+        }
+        if (count($r->user) > 0) {
+            $ru = "";
+            foreach ($r->user as $key => $u) {
+                if ($key === array_key_last($r->user->toArray())) {
+                    $ru .= "`".$u->name."`.";
+                } else {
+                    $ru .= "`".$u->name."`, ";
+                }
+            }
+            return redirect()->back()->withErrors(["relationship" => "Esta função está em uso pelos seguintes usuarios $ru"]);
+        }
     }
 }

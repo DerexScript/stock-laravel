@@ -83,6 +83,8 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/', [RoleController::class, 'create'])->middleware('verified')->name('createRole');
         Route::post('/store', [RoleController::class, 'store'])->middleware('verified')->name('storeRole');
         Route::delete('/destroy/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
+        Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('editRole');
+        Route::put('/update/{role}', [RoleController::class, 'update'])->name('updateRole');
     });
 });
 
@@ -98,7 +100,6 @@ Route::get('/teste', function () {
 
     //with() = eaggerload
     $r = App\Models\Role::with(['category', 'user'])->first();
-
     /*
      $cat = App\Models\Role::find(4);
     if (isset($cat)) {
