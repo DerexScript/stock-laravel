@@ -103,7 +103,7 @@ class RoleController extends Controller
         $r = Role::with(['category', 'user'])->first();
 
 
-        return response($r->user)->header('Content-Type', 'application/json');
+        return response(count($r->category)." ".count($r->user))->header('Content-Type', 'application/json');
         exit();
 
         $role->delete();
