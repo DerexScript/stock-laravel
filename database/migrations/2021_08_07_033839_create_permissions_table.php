@@ -14,29 +14,16 @@ class CreatePermissionsTable extends Migration
     public function up()
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('category_id');
             $table->boolean('view');
             $table->boolean('edit');
             $table->boolean('delete');
-
-            $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('category_id');
-
             $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('category_id')->references('id')->on('categories');
-
             $table->timestamps();
+            $table->primary(['role_id', 'category_id']);
         });
-
-        /*
-        DB::table('permissions')->insert([
-            'user' => 'default',
-            'category' => 'default',
-            'view' => true,
-            'edit' => true,
-            'delete' => true
-        ]);
-        */
     }
 
     /**
@@ -47,8 +34,8 @@ class CreatePermissionsTable extends Migration
     public function down()
     {
         Schema::table('permissions', function (Blueprint $table) {
-            $table->dropForeign('role_id');
-            $table->dropForeign('category_id');
+            $table->dropForeign('permissions_role_id_foreign');
+            $table->dropForeign('permissions_category_id_foreign');
         });
         Schema::dropIfExists('permissions');
     }

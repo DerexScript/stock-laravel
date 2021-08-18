@@ -35,7 +35,7 @@ class CreateUpdatesTable extends Migration
     public function down()
     {
         Schema::table('updates', function (Blueprint $table) {
-            $table->dropForeign('product_id');
+            $table->dropForeign('updates_product_id_foreign');
         });
         Schema::dropIfExists('updates');
     }

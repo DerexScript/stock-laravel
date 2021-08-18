@@ -25,12 +25,12 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'surname' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'username' => $this->faker->unique()->userName(),
+            'email' => 'admin@admin.com', //$this->faker->unique()->safeEmail(),
+            'username' => 'admin', //$this->faker->unique()->userName(),
             'email_verified_at' => now(),
             'is_admin' => 1,
             'role_id' => 1,
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2a$12$p1SQ5I4gkAgsDEqWxfigpuED3elHNr3heRzABsY5ZEN6AvxXVi5SC', // adminadm
             'remember_token' => Str::random(10),
         ];
     }

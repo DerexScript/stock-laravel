@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class RoleController extends Controller
 {
@@ -37,6 +39,16 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //Role::create($request->all());
+
+        $request->validate(
+            [
+                'name' => 'unique:roles'
+            ],
+            [
+                'name.unique' => 'Uma função com esse nome já existe.'
+            ]
+        );
+
         $role = new Role();
         $role->forceFill([
             'name' => $request->name
@@ -87,7 +99,30 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+
+
+        $credentials = $role->only('id', 'name');
+        $rules = [
+            'id' => 'exists:jobs,id',
+        ];
+        $validator = Validator::make($credentials, $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withInput($credentials)->withErrors($validator);
+        } else {
+            echo "OK";
+        }
+
+        exit();
+
+
+        return response($credentials)->header('Content-Type', 'application/json');
+        exit();
+
+        return response($role->toJson())->header('Content-Type', 'application/json');
+        exit();
+
         $role->delete();
-        return redirect()->route('createRole');
+        return redirect()->back();
     }
 }

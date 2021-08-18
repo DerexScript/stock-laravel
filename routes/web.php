@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
+
 use Illuminate\Support\Facades\Redis;
 
 /*
@@ -86,9 +87,7 @@ Route::prefix('dashboard')->group(function () {
 });
 
 Route::fallback(function () {
-
     return view('fallback');
-
 });
 
 Route::get('/teste', function () {
@@ -96,7 +95,24 @@ Route::get('/teste', function () {
 //    $userValue = Illuminate\Support\Facades\Redis::get('user');
 //    echo "User Value: ".$userValue;
 //    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
-    echo "TESTE";
+
+    //with() = eaggerload
+    $r = App\Models\Role::with(['category', 'user'])->first();
+
+    /*
+     $cat = App\Models\Role::find(4);
+    if (isset($cat)) {
+        //return response($cat->toJson())->header('Content-Type', 'application/json');
+        //exit();
+        $cat->category()->attach([
+            4 => ['view' => (bool) 0, 'edit' => (bool) 1, 'delete' => (bool) 0],
+            3 => ['view' => (bool) 0, 'edit' => (bool) 1, 'delete' => (bool) 0]
+        ]);
+    }
+    */
+
+    return response($r->toJson())->header('Content-Type', 'application/json');
+    //return response($r->toJson())->header('Content-Type', 'application/json');
 });
 
 

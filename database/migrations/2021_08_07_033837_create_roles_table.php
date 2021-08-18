@@ -18,10 +18,6 @@ class CreateRolesTable extends Migration
             $table->string('name')->unique();
             $table->timestamps();
         });
-
-        DB::table('roles')->insert([
-            'name' => 'default'
-        ]);
     }
 
     /**
