@@ -113,28 +113,26 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //with() = eaggerload
+        dd($role->users->count());
+        exit();
+        //with() = eager load
         $r = Role::with(['category', 'user'])->find($role->id);
-        if (count($r->category) === 0 && count($r->user) === 0) {
+        if ($r->category->count() === 0 && $r->user->count() === 0) {
             $role->delete();
             DB::statement('ALTER TABLE roles AUTO_INCREMENT=1;');
             return redirect()->back();
         }
-        if (count($r->category) > 0) {
+        if ($r->category->count() > 0) {
             $rc = "";
             foreach ($r->category as $c) {
                 $rc .= $c->name.", ";
             }
             return redirect()->back()->withErrors(["relationship" => "Esta função está relacionada $rc"]);
         }
-        if (count($r->user) > 0) {
+        if ($r->user->count() > 0) {
             $ru = "";
-            foreach ($r->user as $key => $u) {
-                if ($key === array_key_last($r->user->toArray())) {
-                    $ru .= "`".$u->name."`.";
-                } else {
-                    $ru .= "`".$u->name."`, ";
-                }
+            foreach ($r->user as $u) {
+                $ru .= ($u === $r->user->last()) ? "`".$u->name."`." : "`".$u->name."`, ";
             }
             return redirect()->back()->withErrors(["relationship" => "Esta função está em uso pelos seguintes usuarios $ru"]);
         }

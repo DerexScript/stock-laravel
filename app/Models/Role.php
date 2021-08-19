@@ -12,18 +12,18 @@ class Role extends Model
     public $fillable = ['name'];
 
 
-
-    public function category()
-    {
-        //tabela relacionada        tabela pivot
-        return $this->belongsToMany("App\Models\Category", "permissions")->withPivot([
-            'view', 'edit', 'delete', 'created_at', 'updated_at'
-        ]);
+    public function permissions(){
+        return $this->morphedByMany(Permission::class, "roleable"); //transformado por muitos
     }
 
-    public function user()
+    public function categories()
     {
-        return $this->hasMany(User::class);
+        return $this->morphedByMany(Category::class, "roleable");  //transformado por muitos
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class); //fazer relação 1:n - tem muitos
     }
 
 

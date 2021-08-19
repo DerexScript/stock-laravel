@@ -86,6 +86,24 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('editRole');
         Route::put('/update/{role}', [RoleController::class, 'update'])->name('updateRole');
     });
+
+    Route::prefix('product')->group(function(){
+        Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('homeProduct');
+    });
+});
+
+Route::get('/tt', function(){
+    $ur = App\Models\User::find(1);
+
+    $role = App\Models\Role::find(2);
+    //$rc = $role->categories()->attach([1,2]);
+    //$rp = $role->permissions()->attach([1,2]);
+
+    $p = App\Models\Permission::find(3);
+    $p1 = App\Models\Permission::find(1);
+
+
+    //$ur->hasPermission($role->permissions);
 });
 
 Route::fallback(function () {
