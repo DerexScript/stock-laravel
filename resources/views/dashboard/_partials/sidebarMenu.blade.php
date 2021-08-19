@@ -2,13 +2,16 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                <a class="nav-link {{Route::currentRouteNamed('dashboard') ? 'active' : ''}}" aria-current="page"
+                   href="{{route('dashboard')}}">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Products</a>
+                <a class="nav-link {{Route::currentRouteNamed('homeProduct') ? 'active' : ''}}"
+                   href="{{route('createProduct')}}">Products</a>
             </li>
             <li class="nav-item">
-                <a href="{{route('createRole')}}" class="nav-link">Funções</a>
+                <a class="nav-link {{Route::currentRouteNamed('createRole') ? 'active' : ''}}"
+                   href="{{route('createRole')}}">Funções</a>
             </li>
         </ul>
     </div>

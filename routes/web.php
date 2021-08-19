@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
 
 use Illuminate\Support\Facades\Redis;
 
@@ -77,22 +77,25 @@ Route::get('/home', function () {
     return redirect()->route('home');
 });
 
-Route::prefix('dashboard')->group(function () {
-    Route::get('/', [Dashboard::class, 'index'])->middleware('verified')->name('dashboard');
+Route::middleware('verified')->prefix('dashboard')->group(function () {
+    Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
     Route::prefix('role')->group(function () {
-        Route::get('/', [RoleController::class, 'create'])->middleware('verified')->name('createRole');
-        Route::post('/store', [RoleController::class, 'store'])->middleware('verified')->name('storeRole');
+        Route::get('/create', [RoleController::class, 'create'])->name('createRole');
+        Route::post('/store', [RoleController::class, 'store'])->name('storeRole');
         Route::delete('/destroy/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
         Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('editRole');
         Route::put('/update/{role}', [RoleController::class, 'update'])->name('updateRole');
     });
-
-    Route::prefix('product')->group(function(){
-        Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('homeProduct');
+    Route::prefix('product')->group(function () {
+        Route::get('/create', [ProductController::class, 'index'])->name('createProduct');
+        Route::get('/store', [ProductController::class, 'index'])->name('storeProduct');
+        Route::get('/destroy/{product}', [ProductController::class, 'index'])->name('destroyProduct');
+        Route::get('/edit/{product}', [ProductController::class, 'index'])->name('editProduct');
+        Route::get('/update/{product}', [ProductController::class, 'index'])->name('updateProduct');
     });
 });
 
-Route::get('/tt', function(){
+Route::get('/tt', function () {
     $ur = App\Models\User::find(1);
 
     $role = App\Models\Role::find(2);

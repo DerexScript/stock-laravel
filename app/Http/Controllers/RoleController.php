@@ -38,20 +38,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //Role::create($request->all());
-
-        $request->validate(
-            [
-                'name' => 'unique:roles'
-            ],
-            [
-                'name.unique' => 'Uma função com esse nome já existe.'
-            ]
-        );
-
+        $request->validate(['name' => 'unique:roles'], ['name.unique' => 'Uma função com esse nome já existe.']);
         $role = new Role();
-        $role->forceFill([
-            'name' => $request->name
-        ]);
+        $role->forceFill(['name' => $request->name]);
         $role->save();
         return redirect()->route('createRole');
     }
@@ -71,7 +60,7 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Role $role)
     {
@@ -83,26 +72,16 @@ class RoleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Role $role)
     {
-        $request->validate(
-            [
-                'name' => 'unique:roles'
-            ],
-            [
-                'name.unique' => 'Uma função com esse nome já existe.'
-            ]
-        );
-        if ($request->input('_token') != '') {
-            $update = $role->update($request->all());
-            if ($update) {
-                return redirect()->route('createRole');
-            } else {
-                return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar o registro"]);
-            }
+        $reqName = $request->only('name');
+        $request->validate(['name' => 'unique:roles'], ['name.unique' => 'Uma função com esse nome já existe.']);
+        if ($role->update($reqName)) {
+            return redirect()->route('createRole');
         }
+        return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar o registro"]);
     }
 
     /**
@@ -113,28 +92,11 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        dd($role->users->count());
-        exit();
-        //with() = eager load
-        $r = Role::with(['category', 'user'])->find($role->id);
-        if ($r->category->count() === 0 && $r->user->count() === 0) {
+        if ($role->users->count() == 0) {
             $role->delete();
-            DB::statement('ALTER TABLE roles AUTO_INCREMENT=1;');
+            DB::statement("ALTER TABLE roles AUTO_INCREMENT=1;");
             return redirect()->back();
         }
-        if ($r->category->count() > 0) {
-            $rc = "";
-            foreach ($r->category as $c) {
-                $rc .= $c->name.", ";
-            }
-            return redirect()->back()->withErrors(["relationship" => "Esta função está relacionada $rc"]);
-        }
-        if ($r->user->count() > 0) {
-            $ru = "";
-            foreach ($r->user as $u) {
-                $ru .= ($u === $r->user->last()) ? "`".$u->name."`." : "`".$u->name."`, ";
-            }
-            return redirect()->back()->withErrors(["relationship" => "Esta função está em uso pelos seguintes usuarios $ru"]);
-        }
+        return redirect()->back()->withErrors(["relationship" => "Esta função está em uso pelos seguintes usuarios: {$role->users->implode('username', ', ')}."]);
     }
 }
