@@ -6,7 +6,6 @@
     <div class="container mt-5 mb-2">
         <div class="row">
 
-
             <div class="col">
                 <div class="card shadow-sm">
                     <img src="{{asset('assets/img/lorempixel.jpg')}}" width="100%" height="225" role="img" aria-label="lorempixel: Thumbnail" alt="">

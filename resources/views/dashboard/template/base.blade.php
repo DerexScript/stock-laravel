@@ -11,7 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    {{--
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{{ asset('assets/img/favicons/apple-touch-icon.png') }}" sizes="180x180">
     <link rel="icon" href="{{ asset('assets/img/favicons/favicon-32x32.png') }}" sizes="32x32" type="image/png">
@@ -19,6 +19,8 @@
     <link rel="manifest" href="{{ asset('assets/img/favicons/manifest.json') }}">
     <link rel="mask-icon" href="{{ asset('assets/img/favicons/safari-pinned-tab.svg') }}" color="#7952b3">
     <link rel="icon" href="{{ asset('assets/img/favicons/favicon.ico') }}">
+    --}}
+    <link rel="shortcut icon" href="{{asset('assets/img/favicons/favicon.ico')}}" type="image/x-icon">
     <meta name="theme-color" content="#7952b3">
     <style>
         .bd-placeholder-img {
