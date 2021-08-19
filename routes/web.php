@@ -99,8 +99,10 @@ Route::get('/tt', function () {
     $ur = App\Models\User::find(1);
 
     $role = App\Models\Role::find(2);
-    $rc = $role->categories()->attach([1,2]);
+    //$rc = $role->categories()->attach([1,2]);
     //$rp = $role->permissions()->attach([1,2]);
+
+    dd($role->categories);
 
     $p = App\Models\Permission::find(3);
     $p1 = App\Models\Permission::find(1);
