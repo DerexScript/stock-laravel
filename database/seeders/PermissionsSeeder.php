@@ -14,6 +14,7 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('permissions')->insert(['name' => 'create_category']);
         DB::table('permissions')->insert(['name' => 'edit_category']);
         DB::table('permissions')->insert(['name' => 'view_category']);
         DB::table('permissions')->insert(['name' => 'delete_category']);

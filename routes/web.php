@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -88,27 +89,33 @@ Route::middleware('verified')->prefix('dashboard')->group(function () {
     });
     Route::prefix('product')->group(function () {
         Route::get('/create', [ProductController::class, 'index'])->name('createProduct');
-        Route::get('/store', [ProductController::class, 'index'])->name('storeProduct');
-        Route::get('/destroy/{product}', [ProductController::class, 'index'])->name('destroyProduct');
-        Route::get('/edit/{product}', [ProductController::class, 'index'])->name('editProduct');
-        Route::get('/update/{product}', [ProductController::class, 'index'])->name('updateProduct');
+        Route::post('/store', [ProductController::class, 'store'])->name('storeProduct');
+        Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('destroyProduct');
+        Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('editProduct');
+        Route::put('/update/{product}', [ProductController::class, 'update'])->name('updateProduct');
+    });
+    Route::prefix('category')->group(function () {
+        Route::get('/create', [CategoryController::class, 'index'])->name('createCategory');
+        Route::post('/store', [CategoryController::class, 'store'])->name('storeCategory');
+        Route::delete('/destroy/{category}', [CategoryController::class, 'destroy'])->name('destroyCategory');
+        Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('editCategory');
+        Route::put('/update/{category}', [CategoryController::class, 'update'])->name('updateCategory');
     });
 });
 
 Route::get('/tt', function () {
     $ur = App\Models\User::find(1);
 
-    $role = App\Models\Role::find(2);
+    $role = App\Models\Role::find(1);
     //$rc = $role->categories()->attach([1,2]);
     //$rp = $role->permissions()->attach([1,2]);
 
-    dd($role->categories);
+    //dd($role->categories()->attach([1,2]));
 
     $p = App\Models\Permission::find(3);
     $p1 = App\Models\Permission::find(1);
-
-
-    //$ur->hasPermission($role->permissions);
+        //dd($role->permissions);
+    dd( $ur->hasPermission($role->permissions) );
 });
 
 Route::fallback(function () {

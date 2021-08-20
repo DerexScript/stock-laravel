@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('dashboard.category.home', ["title" => "Categorias De Produtos", "categories" => $categories]);
     }
 
     /**
@@ -31,11 +33,17 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        //Category::create($request->all());
+        $request->validate(['name' => 'unique:categories'], ['name.unique' => 'Uma categoria com esse nome já existe.']);
+        $external = $request->has('external') ?? false;
+        $category = new Category();
+        $category->forceFill(['name' => $request->name, 'external' => $external]);
+        $category->save();
+        return redirect()->route('createCategory');
     }
 
     /**
@@ -53,11 +61,11 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
-        //
+        return view('dashboard.category.edit', ['title' => 'Editar categoria', 'category' => $category]);
     }
 
     /**
@@ -65,21 +73,32 @@ class CategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate(['name' => 'unique:categories'], ['name.unique' => 'Uma categoria com esse nome já existe.']);
+        $reqName = $request->only('name', 'external');
+        $reqName["external"] = $request->has('external') ?? false;
+        if ($category->update($reqName)) {
+            return redirect()->route('createCategory');
+        }
+        return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar categoria"]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)
     {
-        //
+        if ($category->products->count() == 0) {
+            $category->delete();
+            DB::statement("ALTER TABLE categories AUTO_INCREMENT=1;");
+            return redirect()->back();
+        }
+        return redirect()->back()->withErrors(["relationship" => "Esta categoria está em uso pelos seguintes produtos: {$category->products->implode('id', ', ')}."]);
     }
 }

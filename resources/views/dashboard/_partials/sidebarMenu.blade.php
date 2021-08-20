@@ -6,8 +6,12 @@
                    href="{{route('dashboard')}}">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{Route::currentRouteNamed('homeProduct') ? 'active' : ''}}"
+                <a class="nav-link {{Route::currentRouteNamed('createProduct') ? 'active' : ''}}"
                    href="{{route('createProduct')}}">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{Route::currentRouteNamed('createCategory') ? 'active' : ''}}"
+                   href="{{route('createCategory')}}">Category</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{Route::currentRouteNamed('createRole') ? 'active' : ''}}"

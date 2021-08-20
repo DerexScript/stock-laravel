@@ -12,7 +12,8 @@ class Role extends Model
     public $fillable = ['name'];
 
 
-    public function permissions(){
+    public function permissions()
+    {
         return $this->morphedByMany(Permission::class, "roleable"); //transformado por muitos
     }
 
