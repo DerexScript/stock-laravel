@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsSeeder::class);
         $this->call(TypesSeeder::class);
         \App\Models\User::factory(1)->create();
-        \App\Models\Product::factory(1)->create();
+        //\App\Models\Product::factory(1)->create();
     }
 }
