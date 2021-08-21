@@ -61,8 +61,7 @@ class ProductController extends Controller
                 "images" => "mimes:jpg,jpeg,bmp,png,webp|max:2048",
                 "description" => "required",
             ]);
-            $upload = $request->images->storeAs('product_images', $product["images"]->getClientOriginalName(),
-                'public');
+            $upload = $request->images->storeAs('product_images', $product["images"]->getClientOriginalName(), 'public');
             if ($upload) {
                 $p = new Product();
                 $p->forceFill([

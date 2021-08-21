@@ -18,3 +18,4 @@ commit.bat
 composer
 composer.lock
 package-lock.json
+optimize.sh

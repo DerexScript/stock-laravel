@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('dashboard.category.home', ["title" => "Categorias De Produtos", "categories" => $categories]);
+        return view('dashboard.categories.home', ["title" => "Categorias De Produtos", "categories" => $categories]);
     }
 
     /**
@@ -65,7 +65,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('dashboard.category.edit', ['title' => 'Editar categoria', 'category' => $category]);
+        return view('dashboard.categories.edit', ['title' => 'Editar categoria', 'category' => $category]);
     }
 
     /**

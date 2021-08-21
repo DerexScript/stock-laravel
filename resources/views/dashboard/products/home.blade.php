@@ -8,6 +8,12 @@
         <h1 class="h2">Produtos</h1>
     </div>
 
+    @if ($errors->has('upload'))
+        <div class="alert alert-danger" role="alert">
+            {{ $errors->first('upload') }}
+        </div>
+    @endif
+
     <table class="table table-striped table-hover mb-5">
         <thead>
         <tr>
@@ -33,7 +39,7 @@
                     <td>{{$p->type->name}}</td>
                     <td>{{$p->user->username}}</td>
                     <td>
-                        <form id="form_edit_{{$loop->index}}" action="{{route("editProduct", $p->id)}}" method="GET"></form>
+                        <form id="form_edit_{{$loop->index}}" action="{{route("product.edit", $p->id)}}" method="GET"></form>
                         <button type="submit" form="form_edit_{{$loop->index}}" class="btn btn-sm btn-outline-primary">Edit</button>
                         <button type="submit" form="form_delete_" class="btn btn-sm btn-outline-danger">Delete</button>
                     </td>
@@ -43,7 +49,7 @@
         </tbody>
     </table>
 
-    <form action="{{route('storeProduct')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
         <fieldset class="border border-1 border-dark rounded-2 p-1" style="background-color: #eeeeee;">
             <legend class="rounded-2 d-flex justify-content-center" style="background-color: gray; color: white; padding: 5px 10px;">Cadastrar
                 Produtos

@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/img/bootstrap-icons-1.5.0/bootstrap-icons.css') }}" rel="stylesheet">
     {{--
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{{ asset('assets/img/favicons/apple-touch-icon.png') }}" sizes="180x180">

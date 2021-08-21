@@ -9,7 +9,7 @@
     </div>
     <div class="row d-flex justify-content-center">
         <div class="col-6">
-            <form method="POST" action="{{route('updateRole', $role->id)}}" class="needs-validation mt-2" novalidate>
+            <form method="POST" action="{{route('role.update', $role->id)}}" class="needs-validation mt-2" novalidate>
                 <div class="mb-3">
                     <label for="roleName" class="form-label">Novo nome da função</label>
                     <input type="text" class="form-control" name="name" id="roleName" value="{{$role->name}}" required>

@@ -8,7 +8,7 @@
         <h1 class="h2">Editar Produtos</h1>
     </div>
 
-    <form action="{{route('updateProduct', $product->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('product.update', $product->id)}}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <fieldset class="border border-1 border-dark rounded-2 p-1" style="background-color: #eeeeee;">

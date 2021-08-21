@@ -14,7 +14,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        return view('dashboard.types.home', ['title' => 'Tipos dos produtos', 'types' => $types]);
     }
 
     /**
@@ -31,11 +32,15 @@ class TypeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'unique:types'], ['name.unique' => 'Um tipo de produto com esse nome já existe.']);
+        $type = new Type();
+        $type->forceFill(['name' => $request->name]);
+        $type->save();
+        return redirect()->route('type.create');
     }
 
     /**
@@ -57,7 +62,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        return view('dashboard.types.edit', ['title' => 'Editar tipo de produto', 'type' => $type]);
     }
 
     /**
@@ -65,11 +70,16 @@ class TypeController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Type  $type
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Type $type)
     {
-        //
+        $reqName = $request->only('name');
+        $request->validate(['name' => 'unique:types'], ['name.unique' => 'Um tipo de produto com esse nome já existe.']);
+        if ($type->update($reqName)) {
+            return redirect()->route('type.create');
+        }
+        return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar o registro"]);
     }
 
     /**

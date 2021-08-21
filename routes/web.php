@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TypeController;
+use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Auth\ResetPasswordController;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Illuminate\Support\Facades\Redis;
@@ -70,9 +73,7 @@ Route::prefix('auth')->group(function () {
 });
 //----------------------------------------------------------------------------
 
-Route::get('/', function () {
-    return view('home', ['title' => 'Home']);
-})->name('home');
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::get('/home', function () {
     return redirect()->route('home');
@@ -80,26 +81,34 @@ Route::get('/home', function () {
 
 Route::middleware('verified')->prefix('dashboard')->group(function () {
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
+
     Route::prefix('role')->group(function () {
-        Route::get('/create', [RoleController::class, 'create'])->name('createRole');
-        Route::post('/store', [RoleController::class, 'store'])->name('storeRole');
-        Route::delete('/destroy/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
-        Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('editRole');
-        Route::put('/update/{role}', [RoleController::class, 'update'])->name('updateRole');
+        Route::get('/create', [RoleController::class, 'create'])->name('role.create');
+        Route::post('/store', [RoleController::class, 'store'])->name('role.store');
+        Route::delete('/destroy/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
+        Route::get('/edit/{role}', [RoleController::class, 'edit'])->name('role.edit');
+        Route::put('/update/{role}', [RoleController::class, 'update'])->name('role.update');
     });
     Route::prefix('product')->group(function () {
-        Route::get('/create', [ProductController::class, 'index'])->name('createProduct');
-        Route::post('/store', [ProductController::class, 'store'])->name('storeProduct');
-        Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('destroyProduct');
-        Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('editProduct');
-        Route::put('/update/{product}', [ProductController::class, 'update'])->name('updateProduct');
+        Route::get('/create', [ProductController::class, 'index'])->name('product.create');
+        Route::post('/store', [ProductController::class, 'store'])->name('product.store');
+        Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+        Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+        Route::put('/update/{product}', [ProductController::class, 'update'])->name('product.update');
     });
     Route::prefix('category')->group(function () {
-        Route::get('/create', [CategoryController::class, 'index'])->name('createCategory');
-        Route::post('/store', [CategoryController::class, 'store'])->name('storeCategory');
-        Route::delete('/destroy/{category}', [CategoryController::class, 'destroy'])->name('destroyCategory');
-        Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('editCategory');
-        Route::put('/update/{category}', [CategoryController::class, 'update'])->name('updateCategory');
+        Route::get('/create', [CategoryController::class, 'index'])->name('category.create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+        Route::delete('/destroy/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
+        Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::put('/update/{category}', [CategoryController::class, 'update'])->name('category.update');
+    });
+    Route::prefix('type')->group(function () {
+        Route::get('/create', [TypeController::class, 'index'])->name('type.create');
+        Route::post('/store', [TypeController::class, 'store'])->name('type.store');
+        Route::delete('/destroy/{type}', [TypeController::class, 'destroy'])->name('type.destroy');
+        Route::get('/edit/{type}', [TypeController::class, 'edit'])->name('type.edit');
+        Route::put('/update/{type}', [TypeController::class, 'update'])->name('type.update');
     });
 });
 
@@ -114,8 +123,8 @@ Route::get('/tt', function () {
 
     $p = App\Models\Permission::find(3);
     $p1 = App\Models\Permission::find(1);
-        //dd($role->permissions);
-    dd( $ur->hasPermission($role->permissions) );
+    //dd($role->permissions);
+    dd($ur->hasPermission($role->permissions));
 });
 
 Route::fallback(function () {
