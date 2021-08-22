@@ -43,7 +43,7 @@ class CategoryController extends Controller
         $category = new Category();
         $category->forceFill(['name' => $request->name, 'external' => $external]);
         $category->save();
-        return redirect()->route('createCategory');
+        return redirect()->route('category.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class CategoryController extends Controller
         $reqName = $request->only('name', 'external');
         $reqName["external"] = $request->has('external') ?? false;
         if ($category->update($reqName)) {
-            return redirect()->route('createCategory');
+            return redirect()->route('category.create');
         }
         return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar categoria"]);
     }

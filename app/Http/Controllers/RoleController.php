@@ -42,7 +42,7 @@ class RoleController extends Controller
         $role = new Role();
         $role->forceFill(['name' => $request->name]);
         $role->save();
-        return redirect()->route('createRole');
+        return redirect()->route('role.create');
     }
 
     /**
@@ -79,7 +79,7 @@ class RoleController extends Controller
         $reqName = $request->only('name');
         $request->validate(['name' => 'unique:roles'], ['name.unique' => 'Uma função com esse nome já existe.']);
         if ($role->update($reqName)) {
-            return redirect()->route('createRole');
+            return redirect()->route('role.create');
         }
         return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar o registro"]);
     }

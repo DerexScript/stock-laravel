@@ -1,20 +1,17 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\TypeController;
-use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-
+use App\Http\Controllers\TypeController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
-use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +30,16 @@ Route::prefix('auth')->group(function () {
     Route::any('/logout', [LoginController::class, 'logout'])->name('auth.logout');
     Route::get('/register', [RegisterController::class, 'create'])->name('auth.create');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.store');
+    //---------------------Resetando-a-senha-do-usuario---------------------------
+    Route::get('/forgot-password',
+        [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
+    Route::post('/forgot-password',
+        [ResetPasswordController::class, 'sendPwResetLink'])->middleware('guest')->name('password.email');
+    Route::get('/reset-password/{token}',
+        [ResetPasswordController::class, 'showViewReset'])->middleware('guest')->name('password.reset');
+    Route::post('/reset-password',
+        [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+    //----------------------------------------------------------------------------
 });
 
 //-------------------verificando-email-apos-registro-------------------------
@@ -51,27 +58,11 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect()->route('virifiedSucess');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
-
 Route::get('/email/virified/sucess', function () {
     return view('auth.emailVerifiedSucess');
 })->name('virifiedSucess');
 //----------------------------------------------------------------------------
 
-//---------------------Resetando-a-senha-do-usuario---------------------------
-Route::prefix('auth')->group(function () {
-    Route::get('/forgot-password',
-        [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
-
-    Route::post('/forgot-password',
-        [ResetPasswordController::class, 'sendPwResetLink'])->middleware('guest')->name('password.email');
-
-    Route::get('/reset-password/{token}',
-        [ResetPasswordController::class, 'showViewReset'])->middleware('guest')->name('password.reset');
-
-    Route::post('/reset-password',
-        [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
-});
-//----------------------------------------------------------------------------
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 

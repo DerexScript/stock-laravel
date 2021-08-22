@@ -41,7 +41,8 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = config('app.url')."/reset-password/{$this->token}?email={$notifiable->email}";
+        $url = route('password.reset',"{$this->token}?email={$notifiable->email}");
+        //$url = config('app.url')."/reset-password/{$this->token}?email={$notifiable->email}";
         $time = config('auth.passwords.'.config('auth.defaults.passwords').'.expire');
         return (new MailMessage)
             ->subject('Notificação de redefinição de senha')

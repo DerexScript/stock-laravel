@@ -37,6 +37,8 @@ class LoginController extends Controller
             if ($pwIsCorrect) {
                 Auth::login($user, $remember);
                 $request->session()->regenerate();
+                //intended tenta redirecionar o usuario para rota que estava tentando acessar antes de ser interceptado pelo middleware
+                //uma uri pode ser passada como parametro em caso de falha..
                 return redirect()->intended('dashboard');
             }
         }
@@ -52,9 +54,11 @@ class LoginController extends Controller
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect('/');
+            //return redirect('/');
+            return redirect()->route('home');
         } else {
-            return redirect('/');
+            //return redirect('/');
+            return redirect()->route('home');
         }
     }
 }
