@@ -42,10 +42,15 @@
                 <td>
                     <form id="form_edit_{{$loop->index}}" action="{{route("product.edit", $p->id)}}"
                           method="GET"></form>
+                    <form id="form_delete_{{$loop->index}}" action="{{route("product.destroy", $p->id)}}"
+                          method="POST">
+                        @method('DELETE')
+                        @csrf
+                    </form>
                     <button type="submit" form="form_edit_{{$loop->index}}" class="btn btn-sm btn-outline-primary">
                         Edit
                     </button>
-                    <button type="submit" form="form_delete_" class="btn btn-sm btn-outline-danger">Delete</button>
+                    <button type="submit" form="form_delete_{{$loop->index}}" class="btn btn-sm btn-outline-danger">Delete</button>
                 </td>
 
             </tr>

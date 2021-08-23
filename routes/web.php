@@ -107,15 +107,16 @@ Route::get('/tt', function () {
     $ur = App\Models\User::find(1);
 
     $role = App\Models\Role::find(1);
+
     //$rc = $role->categories()->attach([1,2]);
     //$rp = $role->permissions()->attach([1,2]);
 
     //dd($role->categories()->attach([1,2]));
 
-    $p = App\Models\Permission::find(3);
-    $p1 = App\Models\Permission::find(1);
+    //$p = App\Models\Permission::find(3);
+    //$p1 = App\Models\Permission::find(1);
     //dd($role->permissions);
-    dd($ur->hasPermission($role->permissions));
+    //dd($ur->hasPermission($role->permissions));
 });
 
 Route::fallback(function () {
@@ -129,7 +130,7 @@ Route::get('/teste', function () {
 //    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
 
     //with() = eaggerload
-    $r = App\Models\Role::with(['category', 'user'])->first();
+    //$r = App\Models\Role::with(['category', 'user'])->first();
     /*
      $cat = App\Models\Role::find(4);
     if (isset($cat)) {
@@ -142,7 +143,7 @@ Route::get('/teste', function () {
     }
     */
 
-    return response($r->toJson())->header('Content-Type', 'application/json');
+    //return response($r->toJson())->header('Content-Type', 'application/json');
     //return response($r->toJson())->header('Content-Type', 'application/json');
 });
 

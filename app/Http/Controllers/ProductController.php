@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\DeletedProduct;
 use App\Models\Product;
 use App\Models\Type;
+
 use Illuminate\Http\Request;
 
 
 class ProductController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -61,7 +64,8 @@ class ProductController extends Controller
                 "images" => "mimes:jpg,jpeg,bmp,png,webp|max:2048",
                 "description" => "required",
             ]);
-            $upload = $request->images->storeAs('product_images', $product["images"]->getClientOriginalName(), 'public');
+            $upload = $request->images->storeAs('product_images', $product["images"]->getClientOriginalName(),
+                'public');
             if ($upload) {
                 $p = new Product();
                 $p->forceFill([
@@ -143,10 +147,27 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Product $product)
     {
-        //
+        //$product->update(["deleted_id" => auth()->user()->id]);
+        //$product->deleted_product()->insert(["reason" => "seilá", "deleted_by" => auth()->user()->id]);
+        //$product->delete();
+        //$aaa = $product->withTrashed()->get();
+
+
+        //return redirect()->back();
+
+        //$data = ["reason" => "Motivo tal e tal", "deleted_by" => auth()->user()->id];
+        //$product->deleted_product()->create($data);
+
+
+
+        $dp = new DeletedProduct();
+        $dp->reason = "Motivo tal e tal";
+        $dp->deleted_by = auth()->user()->id;
+        $dp->save();
+
     }
 }

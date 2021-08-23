@@ -9,7 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    public $fillable = ['name'];
+    protected $fillable = ['name'];
 
 
     public function permissions()
@@ -24,7 +24,8 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class); //fazer relação 1:n - tem muitos
+        //return $this->hasMany(User::class); //fazer relação 1:n - tem muitos
+        return $this->morphToOne(User::class); //fazer relação 1:n - tem muitos
     }
 
 
