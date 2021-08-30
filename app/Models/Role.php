@@ -12,20 +12,14 @@ class Role extends Model
     protected $fillable = ['name'];
 
 
-    public function permissions()
-    {
-        return $this->morphedByMany(Permission::class, "roleable"); //transformado por muitos
-    }
-
     public function categories()
     {
-        return $this->morphedByMany(Category::class, "roleable");  //transformado por muitos
+        return $this->belongsToMany(Category::class);
     }
 
     public function users()
     {
-        //return $this->hasMany(User::class); //fazer relação 1:n - tem muitos
-        return $this->morphToOne(User::class); //fazer relação 1:n - tem muitos
+        return $this->hasMany(User::class); //fazer relação 1:n - tem muitos
     }
 
 

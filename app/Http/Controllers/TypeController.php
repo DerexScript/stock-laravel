@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TypeController extends Controller
 {
@@ -86,10 +87,12 @@ class TypeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Type  $type
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Type $type)
     {
-        //
+        $type->delete();
+        DB::statement("ALTER TABLE types AUTO_INCREMENT=1;");
+        return redirect()->back();
     }
 }
