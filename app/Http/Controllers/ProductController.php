@@ -30,11 +30,13 @@ class ProductController extends Controller
             "category_id" => 1,
             "type_id" => 1
         ];
-        return view('dashboard.products.home',
+        return view(
+            'dashboard.products.home',
             [
                 "title" => "Produtos", "products" => $products, "categories" => $categories, "types" => $types,
                 "productTest" => $productTest
-            ]);
+            ]
+        );
     }
 
     /**
@@ -64,8 +66,11 @@ class ProductController extends Controller
                 "images" => "mimes:jpg,jpeg,bmp,png,webp|max:2048",
                 "description" => "required",
             ]);
-            $upload = $request->images->storeAs('product_images', $product["images"]->getClientOriginalName(),
-                'public');
+            $upload = $request->images->storeAs(
+                'product_images',
+                $product["images"]->getClientOriginalName(),
+                'public'
+            );
             if ($upload) {
                 $p = new Product();
                 $p->forceFill([
@@ -137,7 +142,7 @@ class ProductController extends Controller
             ]);
             $upload = $request->images->storeAs('product_images', $reqParams["images"], 'public');
             if ($upload && $product->update($reqParams)) {
-                return redirect()->route('createProduct');
+                return redirect()->route('product.create');
             }
         }
         return redirect()->back()->withErrors(["update" => "Erro ao tentar atualizar o produto"]);
@@ -152,22 +157,17 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //$product->update(["deleted_id" => auth()->user()->id]);
-        //$product->deleted_product()->insert(["reason" => "seilá", "deleted_by" => auth()->user()->id]);
-        //$product->delete();
+        //$product->deleted_product()->insert(["reason" => "seilá", "deleted_by" => auth()->user()->id, "product_id" => $product['id']]);
+        $product->delete();
         //$aaa = $product->withTrashed()->get();
-
-
         //return redirect()->back();
-
         //$data = ["reason" => "Motivo tal e tal", "deleted_by" => auth()->user()->id];
         //$product->deleted_product()->create($data);
-
-
-
         $dp = new DeletedProduct();
         $dp->reason = "Motivo tal e tal";
         $dp->deleted_by = auth()->user()->id;
+        $dp->product_id = $product['id'];
         $dp->save();
-
+        return redirect()->route('product.create');
     }
 }

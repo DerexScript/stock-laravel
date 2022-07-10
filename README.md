@@ -10,6 +10,11 @@ Projeto feito para fins de estudo.
 - Aplicado sistema de queue e jobs nos disparos de e-mails
 - Views construidas com bootstrap 5.1.0
 
+## Como instalar
+- composer install
+- php artisan migrate:fresh
+- rm -rf public/storage
+- ln -s storage/app/public public/storage
 
 ## License
 
