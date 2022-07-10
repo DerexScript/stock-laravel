@@ -31,14 +31,22 @@ Route::prefix('auth')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])->name('auth.create');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.store');
     //---------------------Resetando-a-senha-do-usuario---------------------------
-    Route::get('/forgot-password',
-        [ResetPasswordController::class, 'forgotPassword'])->middleware('guest')->name('password.request');
-    Route::post('/forgot-password',
-        [ResetPasswordController::class, 'sendPwResetLink'])->middleware('guest')->name('password.email');
-    Route::get('/reset-password/{token}',
-        [ResetPasswordController::class, 'showViewReset'])->middleware('guest')->name('password.reset');
-    Route::post('/reset-password',
-        [ResetPasswordController::class, 'updatePassword'])->middleware('guest')->name('password.update');
+    Route::get(
+        '/forgot-password',
+        [ResetPasswordController::class, 'forgotPassword']
+    )->middleware('guest')->name('password.request');
+    Route::post(
+        '/forgot-password',
+        [ResetPasswordController::class, 'sendPwResetLink']
+    )->middleware('guest')->name('password.email');
+    Route::get(
+        '/reset-password/{token}',
+        [ResetPasswordController::class, 'showViewReset']
+    )->middleware('guest')->name('password.reset');
+    Route::post(
+        '/reset-password',
+        [ResetPasswordController::class, 'updatePassword']
+    )->middleware('guest')->name('password.update');
     //----------------------------------------------------------------------------
 });
 
@@ -56,7 +64,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect()->route('virifiedSucess');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['auth'/*, 'signed'*/])->name('verification.verify');
 
 Route::get('/email/virified/sucess', function () {
     return view('auth.emailVerifiedSucess');
@@ -124,10 +132,13 @@ Route::fallback(function () {
 });
 
 Route::get('/teste', function () {
-//    Illuminate\Support\Facades\Redis::set('user', "Taylor");
-//    $userValue = Illuminate\Support\Facades\Redis::get('user');
-//    echo "User Value: ".$userValue;
-//    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
+    //Illuminate\Support\Facades\Redis::set('user', "Taylor");
+    //$userValue = Illuminate\Support\Facades\Redis::get('user');
+    //echo "User Value: " . $userValue;
+
+    phpinfo();
+
+    //    \App\Jobs\SendEmailVerificationNotificationJob::dispatch(Auth::user());
 
     //with() = eaggerload
     //$r = App\Models\Role::with(['category', 'user'])->first();
@@ -146,6 +157,3 @@ Route::get('/teste', function () {
     //return response($r->toJson())->header('Content-Type', 'application/json');
     //return response($r->toJson())->header('Content-Type', 'application/json');
 });
-
-
-

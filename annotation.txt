@@ -1,0 +1,29 @@
+
+
+/opt/alt/php80/usr/bin/php artisan queue:work --tries=3 --timeout=60
+
+/opt/alt/php80/usr/bin/php artisan queue:retry
+
+
+
+/opt/alt/php80/usr/bin/php artisan view:clear;/opt/alt/php80/usr/bin/php artisan route:clear;/opt/alt/php80/usr/bin/php artisan optimize:clear;/opt/alt/php80/usr/bin/php artisan event:clear;/opt/alt/php80/usr/bin/php artisan config:clear;
+
+
+
+#-------SERVICE-------------------
+[Unit]
+Description=stocklaravel
+
+[Service]
+WorkingDirectory=/home/stockla/public_html/
+ExecStart=/opt/alt/php80/usr/bin/php /home/stockla/public_html/artisan queue:work --tries=3 --timeout=60
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10    
+KillSignal=SIGINT
+SyslogIdentifier=stock-laravel
+User=root
+
+[Install]
+WantedBy=multi-user.target
+#------END-SERVICE-------------------
